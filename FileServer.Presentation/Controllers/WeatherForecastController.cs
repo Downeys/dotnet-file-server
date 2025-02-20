@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace dotnet_file_server.Controllers
+namespace FileServer.Presentation.Controllers
 {
     [ApiController]
     [Route("[controller]")]

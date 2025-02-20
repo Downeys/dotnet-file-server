@@ -1,4 +1,4 @@
-namespace dotnet_file_server
+namespace FileServer.Presentation
 {
     public class WeatherForecast
     {
