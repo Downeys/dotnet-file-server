@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-file-server", "dotnet-file-server.csproj", "{C0E4C2E8-6BBB-42A2-8BB5-2DF7E5E6C219}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0E4C2E8-6BBB-42A2-8BB5-2DF7E5E6C219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E4C2E8-6BBB-42A2-8BB5-2DF7E5E6C219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E4C2E8-6BBB-42A2-8BB5-2DF7E5E6C219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E4C2E8-6BBB-42A2-8BB5-2DF7E5E6C219}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FA9326DF-ACFD-4C60-B661-5F0BBB3C337B}
+	EndGlobalSection
+EndGlobal
