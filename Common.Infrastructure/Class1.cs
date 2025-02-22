@@ -1,4 +1,4 @@
-﻿namespace FileServer.Application
+﻿namespace Common.Infrastructure
 {
     public class Class1
     {

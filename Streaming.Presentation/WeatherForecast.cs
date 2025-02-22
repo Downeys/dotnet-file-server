@@ -1,8 +1,8 @@
-namespace FileServer.Presentation
+namespace Streaming.Presentation
 {
     public class WeatherForecast
     {
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
 
         public int TemperatureC { get; set; }
 
