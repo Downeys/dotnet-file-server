@@ -1,0 +1,6 @@
+@WristbandRadio.FileServer.Streaming.Presentation_HostAddress = http://localhost:5239
+
+GET {{WristbandRadio.FileServer.Streaming.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

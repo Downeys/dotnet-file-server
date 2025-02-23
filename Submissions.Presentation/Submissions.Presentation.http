@@ -1,6 +1,0 @@
-@Submissions.Presentation_HostAddress = http://localhost:5100
-
-GET {{Submissions.Presentation_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
