@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Core\WristbandRadio.FileServer.Common.Domain\WristbandRadio.FileServer.Common.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
