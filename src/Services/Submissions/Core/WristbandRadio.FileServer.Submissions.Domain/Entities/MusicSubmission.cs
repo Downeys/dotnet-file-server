@@ -1,17 +1,14 @@
-﻿using Ardalis.GuardClauses;
-using WristbandRadio.FileServer.Common.Domain.Entities;
+﻿namespace WristbandRadio.FileServer.Submissions.Domain.Entities;
 
-namespace WristbandRadio.FileServer.Submissions.Domain.Entities;
-
-public class MusicSubmission : AggregateRoot
+public sealed class MusicSubmission : Entity, IAggregateRoot
 {
     public string ArtistName { get; private set; }
     public string ContactName { get; private set; }
     public string ContactEmail { get; private set; }
     public string ContactPhone { get; private set; }
     public bool OwnsRights { get; private set; }
-    public virtual List<string> ImageUrls { get; private set; } = [];
-    public virtual List<string> AudioUrls { get; private set; } = [];
+    public List<string> ImageUrls { get; private set; } = [];
+    public List<string> AudioUrls { get; private set; } = [];
 
     private MusicSubmission(string artistName, string contactName, string contactEmail, string contactPhone, bool ownsRights, Guid id = default)
     {

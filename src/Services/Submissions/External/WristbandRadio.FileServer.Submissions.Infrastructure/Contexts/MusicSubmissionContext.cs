@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WristbandRadio.FileServer.Submissions.Domain.Entities;
+﻿namespace WristbandRadio.FileServer.Submissions.Infrastructure.Contexts;
 
-namespace WristbandRadio.FileServer.Submissions.Infrastructure.Contexts
+public class MusicSubmissionContext
 {
-    class MusicSubmissionContext : DbContext
+    public MusicSubmissionContext()
     {
-        public DbSet<MusicSubmission> MusicSubmissions { get; set; }
+    }
+    public MusicSubmissionContext(DbContextOptions<MusicSubmissionContext> options) : base(options)
+    {
     }
 }
