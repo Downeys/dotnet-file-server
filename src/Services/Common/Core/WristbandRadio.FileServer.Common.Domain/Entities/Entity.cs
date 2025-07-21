@@ -1,20 +1,18 @@
-﻿using MediatR;
-
-namespace WristbandRadio.FileServer.Common.Domain.Entities;
+﻿namespace WristbandRadio.FileServer.Common.Domain.Entities;
 public abstract class Entity
 {
     int? _requestedHashCode;
-    int _Id;
-    private List<INotification> _domainEvents;
-    public virtual int Id
+    object _id = default!;
+    private List<INotification> _domainEvents = [];
+    public virtual object Id
     {
         get
         {
-            return _Id;
+            return _id;
         }
         protected set
         {
-            _Id = value;
+            _id = value;
         }
     }
 
@@ -32,7 +30,7 @@ public abstract class Entity
 
     public bool IsTransient()
     {
-        return this.Id == default(Int32);
+        return this.Id == default(object);
     }
 
     public override bool Equals(object obj)
