@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Core\WristbandRadio.FileServer.Common.Domain\WristbandRadio.FileServer.Common.Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\src\Core\WristbandRadio.FileServer.Common.Domain\WristbandRadio.FileServer.Common.Domain.csproj" />
   </ItemGroup>
 
 </Project>
