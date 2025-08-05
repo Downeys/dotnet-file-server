@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\PostgresDatabase\WristbandRadio.FileServer.PostgresDatabase.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\src\External\WristbandRadio.FileServer.Common.Infrastructure\WristbandRadio.FileServer.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Core\WristbandRadio.FileServer.Submissions.Domain\WristbandRadio.FileServer.Submissions.Domain.csproj" />
   </ItemGroup>
 
 </Project>

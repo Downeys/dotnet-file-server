@@ -1,4 +1,4 @@
-﻿namespace WristbandRadio.FileServer.Common.Domain.Entities;
+﻿namespace WristbandRadio.FileServer.Common.Domain.Contracts.Entities;
 
 public abstract class ValueObject
 {
@@ -12,7 +12,7 @@ public abstract class ValueObject
     }
     protected static bool NotEqualOperator(ValueObject left, ValueObject right)
     {
-        return !(EqualOperator(left, right));
+        return !EqualOperator(left, right);
     }
     protected abstract IEnumerable<object> GetEqualityComponents();
     public override bool Equals(object obj)
@@ -22,7 +22,7 @@ public abstract class ValueObject
             return false;
         }
         var other = (ValueObject)obj;
-        return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+        return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
     }
     public override int GetHashCode()
     {
