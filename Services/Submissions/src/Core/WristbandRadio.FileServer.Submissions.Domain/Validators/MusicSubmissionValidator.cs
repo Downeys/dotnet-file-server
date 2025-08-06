@@ -1,6 +1,4 @@
-﻿using WristbandRadio.FileServer.Common.Domain.Contracts.Specification;
-
-namespace WristbandRadio.FileServer.Submissions.Domain.Validators;
+﻿namespace WristbandRadio.FileServer.Submissions.Domain.Validators;
 
 public class MusicSubmissionValidator : IValidator
 {

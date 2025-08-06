@@ -3,6 +3,7 @@ global using System.Diagnostics.CodeAnalysis;
 global using System.Text.RegularExpressions;
 global using WristbandRadio.FileServer.Common.Domain.Contracts.Entities;
 global using WristbandRadio.FileServer.Common.Domain.Contracts.Persistance;
+global using WristbandRadio.FileServer.Common.Domain.Contracts.Specification;
 global using WristbandRadio.FileServer.Common.Domain.Utilities.Custom_Attributes;
 global using WristbandRadio.FileServer.Submissions.Domain.Entities;
 global using WristbandRadio.FileServer.Submissions.Domain.Models;

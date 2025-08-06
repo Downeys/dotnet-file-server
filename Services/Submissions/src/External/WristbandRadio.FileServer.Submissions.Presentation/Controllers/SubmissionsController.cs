@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace WristbandRadio.FileServer.Submissions.Presentation.Controllers;
+﻿namespace WristbandRadio.FileServer.Submissions.Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
