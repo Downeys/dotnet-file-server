@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WristbandRadio.FileServer.Submissions.Infrastructure\WristbandRadio.FileServer.Submissions.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace WristbandRadio.FileServer.Submissions.Infrastructure.Settings;
+﻿namespace WristbandRadio.FileServer.Submissions.Infrastructure.Settings;
 
 public class DbSettings
 {

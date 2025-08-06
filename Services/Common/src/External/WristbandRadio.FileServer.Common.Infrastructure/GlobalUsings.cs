@@ -1,0 +1,15 @@
+﻿global using Ardalis.GuardClauses;
+global using Dapper;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Npgsql;
+global using System.Data;
+global using System.Linq.Expressions;
+global using System.Reflection;
+global using System.Text.RegularExpressions;
+global using WristbandRadio.FileServer.Common.Domain.Contracts.Persistance;
+global using WristbandRadio.FileServer.Common.Domain.Utilities;
+global using WristbandRadio.FileServer.Common.Domain.Utilities.Custom_Attributes;
+global using WristbandRadio.FileServer.Common.Infrastructure.Database;
+global using WristbandRadio.FileServer.Common.Infrastructure.Utilities;
+global using static WristbandRadio.FileServer.Common.Infrastructure.StaticData.Constants;
