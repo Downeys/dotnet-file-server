@@ -12,3 +12,4 @@ global using WristbandRadio.FileServer.Common.Domain.Utilities;
 global using WristbandRadio.FileServer.Common.Domain.Utilities.Custom_Attributes;
 global using WristbandRadio.FileServer.Common.Infrastructure.Database;
 global using WristbandRadio.FileServer.Common.Infrastructure.Utilities;
+global using static WristbandRadio.FileServer.Common.Infrastructure.StaticData.Constants;

@@ -147,18 +147,16 @@ END;
 -- Update Record
 CREATE PROCEDURE update_record
     @table_name VARCHAR(255),
-    @set_clause VARCHAR(MAX),
-    @where_clause VARCHAR(MAX)
+    @columns VARCHAR(MAX),
+    @id VARCHAR(22)
 AS
 BEGIN
-    DECLARE @sql NVARCHAR(MAX);
-    
-    SET @sql = N'UPDATE ' + QUOTENAME(@table_name) + 
-               N' SET ' + @set_clause + 
-               N' WHERE ' + @where_clause;
-    
-    EXEC sp_executesql @sql;
-END;
+    DECLARE @sql NVARCHAR(MAX)
+
+    SET @sql = N'UPDATE ' + QUOTENAME(@tableName) + ' SET ' +  @columnsToUpdate + ' WHERE Id=@id'
+
+    EXEC sp_executesql @sql,N'@id VARCHAR(22)',@id
+END
 
 -- Soft Delete Record
 CREATE PROCEDURE soft_delete_record
@@ -187,4 +185,16 @@ BEGIN
                N' SET deleted_date_time = NOW() WHERE ' + QUOTENAME(@column_name) + N' = @value';
     
     EXEC sp_executesql @sql, N'@value VARCHAR(255)', @value;
+END;
+
+-- Get Total Records Count
+CREATE PROCEDURE get_total_records_count
+    @tableName VARCHAR(50)
+AS
+BEGIN
+	DECLARE @sql NVARCHAR(MAX)
+
+	SET @sql= N'SELECT COUNT(Id) FROM ' + QUOTENAME(@tableName) + ' WHERE IsDeleted=0'
+
+	EXEC sp_executesql @sql
 END;

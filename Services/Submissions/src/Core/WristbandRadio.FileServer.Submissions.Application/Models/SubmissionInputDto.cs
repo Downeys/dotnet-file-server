@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace WristbandRadio.FileServer.Submissions.Application.Models;
+﻿namespace WristbandRadio.FileServer.Submissions.Application.Models;
 
 [ExcludeFromCodeCoverage]
 public sealed record SubmissionInputDto(

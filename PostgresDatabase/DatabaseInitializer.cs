@@ -1,6 +1,4 @@
-﻿using DbUp;
-
-namespace WristbandRadio.FileServer.PostgresDatabase;
+﻿namespace WristbandRadio.FileServer.PostgresDatabase;
 
 public class DatabaseInitializer
 {
