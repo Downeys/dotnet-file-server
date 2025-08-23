@@ -7,19 +7,24 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
     {
         _dapperDataContext = dapperDataContext;
     }
-    public async Task<IEnumerable<T>> GetAsync(params string[] selectData)
+    public async Task<IEnumerable<T>> GetAsync(QueryParameters queryParameters, params string[] selectData)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-        //parameters.Add("pageNumber", queryParameters.PageNo, DbType.Int32, ParameterDirection.Input);
-        //parameters.Add("pageSize", queryParameters.PageSize, DbType.Int32, ParameterDirection.Input);
+        var tableName = typeof(T).GetDbTableName();
+        var pageNumber = queryParameters.PageNo;
+        var pageSize = queryParameters.PageSize;
+        var columns = selectData != null && selectData.Length > 0
+            ? typeof(T).GetDbTableColumnNames(selectData)
+            : "*"; // Default to all columns if none specified
+        var previousPageLastRecord = (pageNumber - 1) * pageSize;
 
-        if (selectData != null && selectData.Length > 0)
-            parameters.Add(COLUMNS, typeof(T).GetDbTableColumnNames(selectData), DbType.String, ParameterDirection.Input);
+        var parameters = new { PreviousPageLastRecord = previousPageLastRecord, PageSize = pageSize };
+        var sql = $"SELECT {columns} FROM {tableName} WHERE paging_order > @PreviousPageLastRecord AND removed_datetime IS NULL ORDER BY paging_order limit @PageSize";
 
         using (var connection = await _dapperDataContext.GetConnection())
         {
-            return await connection.QueryAsync<T>("get_records", parameters, commandType: CommandType.StoredProcedure);
+            var returnVal = await connection.QueryAsync<T>(sql, parameters);
+            
+            return returnVal;
         }
     }
     public async Task<T> GetByIdAsync(Guid id, params string[] selectData)
@@ -27,6 +32,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
         var parameters = new DynamicParameters();
         parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
         parameters.Add(ID, id, DbType.String, ParameterDirection.Input, size: 22);
+
+        var tableName = typeof(T).GetDbTableName();
+        
+        //var parameters = new { Id = id };
+        var sql = $"SELECT * FROM {tableName} WHERE id = @Id AND removed_datetime IS NULL";
 
         if (selectData != null && selectData.Length > 0)
             parameters.Add(COLUMNS, typeof(T).GetDbTableColumnNames(selectData), DbType.String, ParameterDirection.Input);
@@ -57,11 +67,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
         var parameters = new DynamicParameters();
         parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
         parameters.Add(COLUMNS, typeof(T).GetDbTableColumnNames(new string[0]), DbType.String, ParameterDirection.Input);
-        parameters.Add(VALUES, typeof(T).GetColumnValuesForInsert(entity), DbType.String, ParameterDirection.Input);
+        parameters.Add(COLUMN_VALUES, typeof(T).GetColumnValuesForInsert(entity), DbType.String, ParameterDirection.Input);
         using (var connection = await _dapperDataContext.GetConnection())
         {
-            var id =  await connection.ExecuteScalarAsync<string>("insert_record", parameters, _dapperDataContext.Transaction, commandType: CommandType.StoredProcedure);
-            return new Guid(id);
+            await connection.ExecuteScalarAsync<string>("insert_record", parameters, _dapperDataContext.Transaction, commandType: CommandType.StoredProcedure);
+            return entity.Id;
         }
     }
     public async Task UpdateAsync(T entity)

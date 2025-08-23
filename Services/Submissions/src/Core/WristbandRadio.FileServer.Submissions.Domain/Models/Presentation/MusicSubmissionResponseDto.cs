@@ -1,7 +1,7 @@
-﻿namespace WristbandRadio.FileServer.Submissions.Application.Models;
+﻿namespace WristbandRadio.FileServer.Submissions.Domain.Models.Presentation;
 
-[ExcludeFromCodeCoverage]
-public sealed record SubmissionInputDto(
+public record MusicSubmissionResponseDto(
+        Guid Id,
         string ArtistName,
         string ContactName,
         string ContactEmail,

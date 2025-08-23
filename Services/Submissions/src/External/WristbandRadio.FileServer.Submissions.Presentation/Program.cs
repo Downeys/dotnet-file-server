@@ -18,15 +18,40 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddDatabase(configuration)
-    .AddInfrastructure(configuration);
+    .AddCommonInfrastructure(configuration)
+    .AddInfrastructure(configuration)
+    .AddApplication(configuration);
+
+builder.Services.AddApiVersioning(options =>
+    {
+        options.ReportApiVersions = true;
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+    })
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 var app = builder.Build();
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => {
+
+        foreach (var description in provider.ApiVersionDescriptions)
+        {
+            c.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+            c.DefaultModelExpandDepth(2);
+            c.DocExpansion(DocExpansion.None);
+            c.DisplayRequestDuration();
+        }
+    });
 }
 
 app.UseHttpsRedirection();

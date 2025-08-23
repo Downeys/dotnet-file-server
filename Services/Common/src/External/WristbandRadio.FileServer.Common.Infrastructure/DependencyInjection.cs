@@ -10,7 +10,7 @@ public static class DependencyInjection
 
         services.AddSingleton<IDbConnectionFactory>(_ => new DbConnectionFactory(connectionString));
         services.AddScoped<DapperDataContext>();
-
+        Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         return services;
     }
 }
