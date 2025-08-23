@@ -29,21 +29,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
     }
     public async Task<T> GetByIdAsync(Guid id, params string[] selectData)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-        parameters.Add(ID, id, DbType.String, ParameterDirection.Input, size: 22);
-
         var tableName = typeof(T).GetDbTableName();
-        
-        //var parameters = new { Id = id };
-        var sql = $"SELECT * FROM {tableName} WHERE id = @Id AND removed_datetime IS NULL";
+        var columns = selectData != null && selectData.Length > 0
+            ? typeof(T).GetDbTableColumnNames(selectData)
+            : "*"; // Default to all columns if none specified
 
-        if (selectData != null && selectData.Length > 0)
-            parameters.Add(COLUMNS, typeof(T).GetDbTableColumnNames(selectData), DbType.String, ParameterDirection.Input);
+        var parameters = new { Id = id };
+        var sql = $"SELECT {columns} FROM {tableName} WHERE id = @Id AND removed_datetime IS NULL";
 
         using (var connection = await _dapperDataContext.GetConnection())
         {
-            return await connection.QuerySingleOrDefaultAsync<T>("get_records_by_id", parameters, commandType: CommandType.StoredProcedure);
+            return await connection.QuerySingleOrDefaultAsync<T>(sql, parameters);
         }
     }
 

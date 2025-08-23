@@ -11,7 +11,7 @@
   "ConnectionStrings": [
     {
       "Name": "DefaultConnection",
-      "ConnectionString": "Server=wristband-d-pgdb.postgres.database.azure.com;Database=postgres;Port=5432;User Id=downeys07@gmail.com;Password=ciefD8mf421!;Ssl Mode=Require;"
+      "ConnectionString": "postgresql://root:pass@host.docker.internal:5432/postgres"
     }
   ],
   "profiles": {
