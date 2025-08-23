@@ -1,6 +1,4 @@
-﻿using WristbandRadio.FileServer.Common.Domain.Contracts.Specification;
-
-namespace WristbandRadio.FileServer.Submissions.Domain.Specifications.MusicSubmissionSpecifications;
+﻿namespace WristbandRadio.FileServer.Submissions.Domain.Specifications.MusicSubmissionSpecifications;
 
 public sealed class IsContactNameValid : ISpecification<MusicSubmission>
 {

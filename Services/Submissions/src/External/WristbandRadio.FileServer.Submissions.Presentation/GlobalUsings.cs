@@ -1,3 +1,16 @@
-﻿global using Microsoft.AspNetCore.Mvc;
+﻿global using Asp.Versioning;
+global using Asp.Versioning.ApiExplorer;
+global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Extensions.Options;
+global using Microsoft.OpenApi.Models;
+global using Swashbuckle.AspNetCore.SwaggerGen;
+global using Swashbuckle.AspNetCore.SwaggerUI;
+global using WristbandRadio.FileServer.Common.Infrastructure;
 global using WristbandRadio.FileServer.PostgresDatabase;
+global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.AddMusicSubmission;
+global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetMusicSubmissions;
+global using WristbandRadio.FileServer.Submissions.Domain.Models.Presentation;
+global using WristbandRadio.FileServer.Submissions.Domain.Utilities;
 global using WristbandRadio.FileServer.Submissions.Infrastructure;
+global using WristbandRadio.FileServer.Submissions.Presentation.Swagger;

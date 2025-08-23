@@ -19,7 +19,7 @@ public class UnitOfWorkImpl : IUnitOfWork
     public async void BeginTransaction()
     {
         var connection = await _dapperDataContext.GetConnection();
-        connection.Open();
+        if(connection.State != System.Data.ConnectionState.Open) connection.Open();
         _dapperDataContext.Transaction = connection.BeginTransaction();
     }
 
