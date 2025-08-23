@@ -20,6 +20,18 @@ public sealed class SubmissionsController : ControllerBase
         return Ok(musicSubmissions);
     }
 
+    [HttpGet("music-submission/{id:length(36)}")]
+    public async Task<IActionResult> GetMusicSubmissionById(string id)
+    {
+        _logger.LogInformation("Get MusicSubmission by Id method called");
+        var musicSubmission = await _sender.Send(new GetMusicSubmissionByIdQuery(id));
+        if (musicSubmission == null)
+        {
+            return NotFound();
+        }
+        return Ok(musicSubmission);
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddMusicSubmission(MusicSubmissionInputDto musicSubmissionInput)
     {
