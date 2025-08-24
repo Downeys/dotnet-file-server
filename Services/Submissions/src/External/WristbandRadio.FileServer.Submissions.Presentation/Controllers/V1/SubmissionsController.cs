@@ -32,6 +32,18 @@ public sealed class SubmissionsController : ControllerBase
         return Ok(musicSubmission);
     }
 
+    [HttpGet("music-submission/{artistName}")]
+    public async Task<IActionResult> GetMusicSubmissionByArtistName([FromQuery] SubmissionQueryParameters queryParameters, string artistName)
+    {
+        _logger.LogInformation("Get MusicSubmission by Id method called");
+        var musicSubmission = await _sender.Send(new GetMusicSubmissionsByArtistNameQuery(queryParameters, artistName));
+        if (musicSubmission == null)
+        {
+            return NotFound();
+        }
+        return Ok(musicSubmission);
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddMusicSubmission(MusicSubmissionInputDto musicSubmissionInput)
     {
