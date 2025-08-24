@@ -15,9 +15,12 @@ public static class DbExtensions
             return string.Join(",", type.GetProperties().Where(p => selectedProperties.ToLowerInvariant().Contains(p.Name.ToLowerInvariant())).Select(p => p.GetDbColumnName())).TrimEnd(',');
     }
 
-    public static string GetColumnValuesForInsert<T>(this Type type, T obj)
+    public static string GetParameterNames(this Type type, string[] selectedProperties)
     {
-        return string.Join(",", type.GetColumnProperties().Select(p => $"'{p.GetValue(obj)}'"));
+        if (selectedProperties.Length < 1)
+            return string.Join(",", type.GetProperties().Select(p => "@" + p.Name)).TrimEnd(',');
+        else
+            return string.Join(",", type.GetProperties().Where(p => selectedProperties.ToLowerInvariant().Contains(p.Name.ToLowerInvariant())).Select(p => "@" + p.Name)).TrimEnd(',');
     }
 
     public static string GetColumnValuesForUpdate<T>(this Type type, T obj)

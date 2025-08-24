@@ -20,6 +20,7 @@ public class AddMusicSubmissionCommandHandler : IRequestHandler<AddMusicSubmissi
         sub.ContactName = request.ContactName;
         sub.ContactEmail = request.ContactEmail;
         sub.ContactPhone = request.ContactPhone;
+        sub.OwnsRights = request.OwnsRights;
         var submissionId = await _unitOfWork.MusicSubmissions.AddAsync(sub);
         _unitOfWork.CommitAndCloseConnection();
         return submissionId;
