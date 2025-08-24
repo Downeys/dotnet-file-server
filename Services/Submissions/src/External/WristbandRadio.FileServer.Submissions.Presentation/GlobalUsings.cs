@@ -11,6 +11,7 @@ global using WristbandRadio.FileServer.PostgresDatabase;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.AddMusicSubmission;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetMusicSubmissionById;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetMusicSubmissions;
+global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetMusicSubmissionsByArtistName;
 global using WristbandRadio.FileServer.Submissions.Domain.Models.Presentation;
 global using WristbandRadio.FileServer.Submissions.Domain.Utilities;
 global using WristbandRadio.FileServer.Submissions.Infrastructure;

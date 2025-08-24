@@ -18,7 +18,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
         var previousPageLastRecord = (pageNumber - 1) * pageSize;
 
         var parameters = new { PreviousPageLastRecord = previousPageLastRecord, PageSize = pageSize };
-        var sql = $"SELECT {columns} FROM {tableName} WHERE paging_order > @PreviousPageLastRecord AND removed_datetime IS NULL ORDER BY paging_order limit @PageSize";
+        var sql = $"SELECT {columns} FROM {tableName} WHERE paging_order > @PreviousPageLastRecord AND removed_datetime IS NULL ORDER BY paging_order LIMIT @PageSize";
 
         using (var connection = await _dapperDataContext.GetConnection())
         {
@@ -39,23 +39,29 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
 
         using (var connection = await _dapperDataContext.GetConnection())
         {
-            return await connection.QuerySingleOrDefaultAsync<T>(sql, parameters);
+            var returnVal = await connection.QuerySingleOrDefaultAsync<T>(sql, parameters);
+            return returnVal;
         }
     }
 
-    public async Task<IEnumerable<T>> GetBySpecificColumnAsync(string columnName, string columnValue, params string[] selectData)
+    public async Task<IEnumerable<T>> GetBySpecificColumnAsync(QueryParameters queryParameters, string columnName, string columnValue, params string[] selectData)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-        parameters.Add(COLUMN_NAME, columnName, DbType.String, ParameterDirection.Input, size: 60);
-        parameters.Add(VALUE, columnValue, DbType.String, ParameterDirection.Input, size: 100);
+        var pageNumber = queryParameters.PageNo;
+        var pageSize = queryParameters.PageSize;
+        var previousPageLastRecord = (pageNumber - 1) * pageSize;
+        var tableName = typeof(T).GetDbTableName();
+        var columns = selectData != null && selectData.Length > 0
+            ? typeof(T).GetDbTableColumnNames(selectData)
+            : "*"; // Default to all columns if none specified
+        var filterColumn = typeof(T).GetDbTableColumnNames([columnName]);
 
-        if (selectData != null && selectData.Length > 0)
-            parameters.Add(COLUMNS, typeof(T).GetDbTableColumnNames(selectData), DbType.String, ParameterDirection.Input);
+        var paremeters = new { PreviousPageLastRecord = previousPageLastRecord, PageSize = pageSize, ColumnValue = columnValue };
+        var sql = $"SELECT {columns} FROM {tableName} WHERE paging_order > @PreviousPageLastRecord AND {filterColumn} = @ColumnValue AND removed_datetime IS NULL ORDER BY paging_order LIMIT @PageSize";
 
         using (var connection = await _dapperDataContext.GetConnection())
         {
-            return await connection.QueryAsync<T>("get_records_by_column", parameters, commandType: CommandType.StoredProcedure);
+            var returnVal = await connection.QueryAsync<T>(sql, paremeters);
+            return returnVal;
         }
     }
     public async Task<Guid> AddAsync(T entity)
