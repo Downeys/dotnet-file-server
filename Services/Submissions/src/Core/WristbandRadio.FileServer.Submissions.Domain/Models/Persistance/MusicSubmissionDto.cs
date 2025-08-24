@@ -15,12 +15,14 @@ public class MusicSubmissionDto : IDbEntity
     public string ContactPhone { get; set; }
     [ColumnName("owns_rights")]
     public bool OwnsRights { get; set; }
-    [ColumnName("created_datetime")]
-    public DateTime? CreatedDatetime { get; set; }
     [ColumnName("created_by")]
     public Guid CreatedBy { get; set; }
-
+    [ColumnName("created_datetime")]
+    public DateTime? CreatedDatetime { get; set; }
     public MusicSubmissionDto()
     {
+        Id = Guid.NewGuid();
+        CreatedDatetime = DateTime.UtcNow;
+        CreatedBy = Guid.NewGuid(); // This should be set to the actual user creating the record
     }
 }

@@ -63,17 +63,18 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
             var returnVal = await connection.QueryAsync<T>(sql, paremeters);
             return returnVal;
         }
-    }
+    }   
     public async Task<Guid> AddAsync(T entity)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-        parameters.Add(COLUMNS, typeof(T).GetDbTableColumnNames(new string[0]), DbType.String, ParameterDirection.Input);
-        parameters.Add(COLUMN_VALUES, typeof(T).GetColumnValuesForInsert(entity), DbType.String, ParameterDirection.Input);
+        var tableName = typeof(T).GetDbTableName();
+        var columns = typeof(T).GetDbTableColumnNames(new string[0]);
+        var parameterNames = typeof(T).GetParameterNames(new string[0]);
+        var sql = $"INSERT INTO {tableName} ({columns}) VALUES ({parameterNames}) RETURNING id";
+
         using (var connection = await _dapperDataContext.GetConnection())
         {
-            await connection.ExecuteScalarAsync<string>("insert_record", parameters, _dapperDataContext.Transaction, commandType: CommandType.StoredProcedure);
-            return entity.Id;
+            var result = await connection.ExecuteScalarAsync<Guid>(sql, entity);
+            return result;
         }
     }
     public async Task UpdateAsync(T entity)
