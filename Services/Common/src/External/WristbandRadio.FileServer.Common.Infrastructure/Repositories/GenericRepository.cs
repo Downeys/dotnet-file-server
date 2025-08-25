@@ -5,7 +5,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
     protected readonly DapperDataContext _dapperDataContext;
     public GenericRepository(DapperDataContext dapperDataContext)
     {
-        _dapperDataContext = dapperDataContext;
+        _dapperDataContext = Guard.Against.Null(dapperDataContext);
     }
     public async Task<IEnumerable<T>> GetAsync(QueryParameters queryParameters, params string[] selectData)
     {
@@ -20,12 +20,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
         var parameters = new { PreviousPageLastRecord = previousPageLastRecord, PageSize = pageSize };
         var sql = $"SELECT {columns} FROM {tableName} WHERE paging_order > @PreviousPageLastRecord AND removed_datetime IS NULL ORDER BY paging_order LIMIT @PageSize";
 
-        using (var connection = await _dapperDataContext.GetConnection())
-        {
-            var returnVal = await connection.QueryAsync<T>(sql, parameters);
-            
-            return returnVal;
-        }
+        var connection = await _dapperDataContext?.GetConnection();
+        var returnVal = await connection.QueryAsync<T>(sql, parameters);
+        return returnVal;
     }
     public async Task<T> GetByIdAsync(Guid id, params string[] selectData)
     {
@@ -37,11 +34,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
         var parameters = new { Id = id };
         var sql = $"SELECT {columns} FROM {tableName} WHERE id = @Id AND removed_datetime IS NULL";
 
-        using (var connection = await _dapperDataContext.GetConnection())
-        {
-            var returnVal = await connection.QuerySingleOrDefaultAsync<T>(sql, parameters);
-            return returnVal;
-        }
+        var connection = await _dapperDataContext?.GetConnection();
+        var returnVal = await connection.QuerySingleOrDefaultAsync<T>(sql, parameters);
+        return returnVal;
     }
 
     public async Task<IEnumerable<T>> GetBySpecificColumnAsync(QueryParameters queryParameters, string columnName, string columnValue, params string[] selectData)
@@ -58,11 +53,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
         var paremeters = new { PreviousPageLastRecord = previousPageLastRecord, PageSize = pageSize, ColumnValue = columnValue };
         var sql = $"SELECT {columns} FROM {tableName} WHERE paging_order > @PreviousPageLastRecord AND {filterColumn} = @ColumnValue AND removed_datetime IS NULL ORDER BY paging_order LIMIT @PageSize";
 
-        using (var connection = await _dapperDataContext.GetConnection())
-        {
-            var returnVal = await connection.QueryAsync<T>(sql, paremeters);
-            return returnVal;
-        }
+        var connection = await _dapperDataContext?.GetConnection();
+        var returnVal = await connection.QueryAsync<T>(sql, paremeters);
+        return returnVal;
     }   
     public async Task<Guid> AddAsync(T entity)
     {
@@ -70,23 +63,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
         var columns = typeof(T).GetDbTableColumnNames(new string[0]);
         var parameterNames = typeof(T).GetParameterNames(new string[0]);
         var sql = $"INSERT INTO {tableName} ({columns}) VALUES ({parameterNames}) RETURNING id";
-
-        using (var connection = await _dapperDataContext.GetConnection())
-        {
-            var result = await connection.ExecuteScalarAsync<Guid>(sql, entity);
-            return result;
-        }
+        var connection = await _dapperDataContext?.GetConnection();
+        var result = await connection.ExecuteScalarAsync<Guid>(sql, entity);
+        return result;
     }
     public async Task UpdateAsync(T entity)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-        parameters.Add(COLUMNS, typeof(T).GetColumnValuesForUpdate(entity), DbType.String, ParameterDirection.Input);
-        parameters.Add(ID, entity.Id, DbType.String, ParameterDirection.Input, size: 22);
-        using (var connection = await _dapperDataContext.GetConnection())
-        {
-            await connection.ExecuteAsync("update_record", parameters, _dapperDataContext.Transaction, commandType: CommandType.StoredProcedure);
-        }
+        var tableName = typeof(T).GetDbTableName();
+        var columns = typeof(T).GetColumnValuesForUpdate(entity);
+        var sql = $"UPDATE {tableName} SET {columns} WHERE id = @Id";
+        var connection = await _dapperDataContext?.GetConnection();
+        await connection.ExecuteAsync(sql, entity);
     }
     public async Task SoftDeleteAsync(Guid id, bool softDeleteFromRelatedChildTables = false)
     {

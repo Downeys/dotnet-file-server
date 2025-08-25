@@ -6,5 +6,6 @@ public record MusicSubmissionResponseDto(
         string ContactName,
         string ContactEmail,
         string ContactPhone,
-        bool OwnsRights
+        bool OwnsRights,
+        string Status
     );

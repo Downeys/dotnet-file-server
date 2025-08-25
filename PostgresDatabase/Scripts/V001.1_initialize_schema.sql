@@ -242,13 +242,15 @@ CREATE TABLE IF NOT EXISTS submissions.music_submissions (
 	contact_name VARCHAR(255) NOT NULL,
 	contact_email VARCHAR(255) NOT NULL,
 	contact_phone VARCHAR(20) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    owns_rights BOOLEAN,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
+	updated_by uuid,
 	removed_by uuid,
-	status VARCHAR(50) NOT NULL,
+    paging_order INT GENERATED ALWAYS AS IDENTITY
 );
 
 ALTER TABLE submissions.music_submissions ADD CONSTRAINT pkey_music_submissions PRIMARY KEY (id);

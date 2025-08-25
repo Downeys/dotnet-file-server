@@ -14,15 +14,46 @@ public class AddMusicSubmissionCommandHandler : IRequestHandler<AddMusicSubmissi
     public async Task<Guid> Handle(AddMusicSubmissionCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Handling AddMusicSubmissionCommand.");
-        _unitOfWork.BeginTransaction();
-        var  sub = new MusicSubmissionDto();
-        sub.ArtistName = request.ArtistName;
-        sub.ContactName = request.ContactName;
-        sub.ContactEmail = request.ContactEmail;
-        sub.ContactPhone = request.ContactPhone;
-        sub.OwnsRights = request.OwnsRights;
-        var submissionId = await _unitOfWork.MusicSubmissions.AddAsync(sub);
-        _unitOfWork.CommitAndCloseConnection();
+        var submissionEntity = ValidateRequest(request);
+        var submissionDto = MapToDto(submissionEntity);
+        var submissionId = await PersistSubmission(submissionDto);
+        return submissionId;
+    }
+
+    private MusicSubmission ValidateRequest(AddMusicSubmissionCommand request)
+    {
+        var submissionEntity = MusicSubmission.Create(
+            request.ArtistName,
+            request.ContactName,
+            request.ContactEmail,
+            request.ContactPhone,
+            request.OwnsRights,
+            Guid.NewGuid()); // This should be the id of the user calling the api
+        if (!submissionEntity.IsValid()) throw new ArgumentException("Invalid music submission request."); // make a better exception
+        return submissionEntity;
+    }
+
+    private MusicSubmissionDto MapToDto(MusicSubmission musicSubmission)
+    {
+        return new MusicSubmissionDto
+        {
+            Id = musicSubmission.Id,
+            ArtistName = musicSubmission.ArtistName,
+            ContactName = musicSubmission.ContactName,
+            ContactEmail = musicSubmission.ContactEmail,
+            ContactPhone = musicSubmission.ContactPhone,
+            OwnsRights = musicSubmission.OwnsRights,
+            CreatedBy = musicSubmission.CreatedBy,
+            CreatedDatetime = musicSubmission.CreatedDatetime,
+            Status = musicSubmission.Status
+        };
+    }
+
+    private async Task<Guid> PersistSubmission(MusicSubmissionDto submissionDto)
+    {
+        await _unitOfWork.BeginTransaction();
+        var submissionId = await _unitOfWork.MusicSubmissions.AddAsync(submissionDto);
+        await _unitOfWork.CommitAndCloseConnection();
         return submissionId;
     }
 }

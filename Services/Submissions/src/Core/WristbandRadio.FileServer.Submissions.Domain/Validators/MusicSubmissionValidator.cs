@@ -16,11 +16,39 @@ public class MusicSubmissionValidator : IValidator
         if (!isOk) throw new ArgumentException(ContactNameInvalid);
         return Task.FromResult(isOk);
     }
+
+    private Task<bool> ValidateContactEmail()
+    {
+        var rule = new IsEmailAddressValid();
+        var isOk = rule.IsSatisfiedBy(_musicSubmission);
+        if (!isOk) throw new ArgumentException(ContactEmailInvalid);
+        return Task.FromResult(isOk);
+    }
+
+    private Task<bool> ValidateContactPhone()
+    {
+        var rule = new IsPhoneNumberValid();
+        var isOk = rule.IsSatisfiedBy(_musicSubmission);
+        if (!isOk) throw new ArgumentException(ContactPhoneInvalid);
+        return Task.FromResult(isOk);
+    }
+
+    private Task<bool> ValidateOwnershipAttestation()
+    {
+        var rule = new IsOwnershipAttestationChecked();
+        var isOk = rule.IsSatisfiedBy(_musicSubmission);
+        if (!isOk) throw new ArgumentException(MissingAttestation);
+        return Task.FromResult(isOk);
+    }
+
     public async Task<bool> IsValid()
     {
         var tasks = new List<Task<bool>>
         {
-            ValidateContactName()
+            ValidateContactName(),
+            ValidateContactEmail(),
+            ValidateContactPhone(),
+            ValidateOwnershipAttestation()
         };
         var result = await Task.WhenAll(tasks);
         return result.All(x => x);

@@ -3,8 +3,8 @@
 public interface IUnitOfWork : IDisposable
 {
     public IMusicSubmissionRepository MusicSubmissions { get; }
-    public void BeginTransaction();
+    public Task BeginTransaction();
     public void Commit();
-    public void CommitAndCloseConnection();
+    public Task CommitAndCloseConnection();
     public void Rollback();
 }

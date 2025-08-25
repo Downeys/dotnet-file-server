@@ -16,7 +16,7 @@ public sealed class SubmissionsController : ControllerBase
     public async Task<IActionResult> GetMusicSubmissions([FromQuery]SubmissionQueryParameters queryParameters)
     {
         _logger.LogInformation("Get MusicSubmission method called");
-        var musicSubmissions = await _sender.Send(new GetMusicSubmissionsQuery(queryParameters));
+        var musicSubmissions = await _sender.Send(new GetPaginatedMusicSubmissionsQuery(queryParameters));
         return Ok(musicSubmissions);
     }
 
@@ -29,14 +29,26 @@ public sealed class SubmissionsController : ControllerBase
         {
             return NotFound();
         }
+        return Ok(musicSubmission.ToResponseDto());
+    }
+
+    [HttpGet("music-submission/artist/{artistName}")]
+    public async Task<IActionResult> GetMusicSubmissionByArtistName([FromQuery] SubmissionQueryParameters queryParameters, string artistName)
+    {
+        _logger.LogInformation("Get MusicSubmission by artist name method called");
+        var musicSubmission = await _sender.Send(new GetPaginatedMusicSubmissionsByArtistNameQuery(queryParameters, artistName));
+        if (musicSubmission == null)
+        {
+            return NotFound();
+        }
         return Ok(musicSubmission);
     }
 
-    [HttpGet("music-submission/{artistName}")]
-    public async Task<IActionResult> GetMusicSubmissionByArtistName([FromQuery] SubmissionQueryParameters queryParameters, string artistName)
+    [HttpGet("music-submission/status/{status}")]
+    public async Task<IActionResult> GetMusicSubmissionByStatus([FromQuery] SubmissionQueryParameters queryParameters, string status)
     {
-        _logger.LogInformation("Get MusicSubmission by Id method called");
-        var musicSubmission = await _sender.Send(new GetMusicSubmissionsByArtistNameQuery(queryParameters, artistName));
+        _logger.LogInformation("Get MusicSubmission by status method called");
+        var musicSubmission = await _sender.Send(new GetPaginatedMusicSubmissionsByStatusQuery(queryParameters, status));
         if (musicSubmission == null)
         {
             return NotFound();
@@ -58,5 +70,22 @@ public sealed class SubmissionsController : ControllerBase
             );
         var submissionId = await _sender.Send(addMusicSubmissionCommand);
         return CreatedAtAction("AddMusicSubmission", new { id = submissionId });
+    }
+
+    [HttpPut("music-submission/{id:length(36)}/status")]
+    public async Task<IActionResult> UpdateMusicSubmissionStatus(string id, UpdateMusicSubmissionStatusInputDto updateMusicSubmissionStatusInput)
+    {
+        _logger.LogInformation("Update MusicSubmission status method called");
+        var updateMusicSubmissionStatusCommand = new UpdateMusicSubmissionStatusCommand
+            (
+                Guid.Parse(id),
+                updateMusicSubmissionStatusInput.Status
+            );
+        var result = await _sender.Send(updateMusicSubmissionStatusCommand);
+        if (!result)
+        {
+            return NotFound();
+        }
+        return NoContent();
     }
 }
