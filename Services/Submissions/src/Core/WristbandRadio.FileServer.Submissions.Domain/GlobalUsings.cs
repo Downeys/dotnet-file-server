@@ -7,7 +7,9 @@ global using WristbandRadio.FileServer.Common.Domain.Contracts.Specification;
 global using WristbandRadio.FileServer.Common.Domain.Utilities;
 global using WristbandRadio.FileServer.Common.Domain.Utilities.Custom_Attributes;
 global using WristbandRadio.FileServer.Submissions.Domain.Entities;
-global using WristbandRadio.FileServer.Submissions.Domain.Models;
 global using WristbandRadio.FileServer.Submissions.Domain.Models.Persistance;
+global using WristbandRadio.FileServer.Submissions.Domain.Models.Presentation;
 global using WristbandRadio.FileServer.Submissions.Domain.Specifications.MusicSubmissionSpecifications;
+global using WristbandRadio.FileServer.Submissions.Domain.Validators;
 global using static WristbandRadio.FileServer.Submissions.Domain.StaticData.MusicSubmissionValidationMessages;
+

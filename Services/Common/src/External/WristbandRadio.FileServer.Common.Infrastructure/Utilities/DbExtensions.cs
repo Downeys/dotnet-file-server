@@ -25,7 +25,7 @@ public static class DbExtensions
 
     public static string GetColumnValuesForUpdate<T>(this Type type, T obj)
     {
-        return string.Join(",", type.GetNonPrimaryKeyColumnProperties().Select(p => $"{p.GetDbColumnName()}='{p.GetValue(obj)}'"));
+        return string.Join(",", type.GetNonPrimaryKeyColumnProperties().Select(p => $"{p.GetDbColumnName()}=@{p.Name}")).TrimEnd(',');
     }
 
     public static string GetDbColumnName(this PropertyInfo propertyInfo)

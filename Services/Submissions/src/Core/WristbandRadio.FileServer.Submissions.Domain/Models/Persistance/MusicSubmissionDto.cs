@@ -19,10 +19,9 @@ public class MusicSubmissionDto : IDbEntity
     public Guid CreatedBy { get; set; }
     [ColumnName("created_datetime")]
     public DateTime? CreatedDatetime { get; set; }
+    [ColumnName("status")]
+    public string Status { get; set; }
     public MusicSubmissionDto()
     {
-        Id = Guid.NewGuid();
-        CreatedDatetime = DateTime.UtcNow;
-        CreatedBy = Guid.NewGuid(); // This should be set to the actual user creating the record
     }
 }

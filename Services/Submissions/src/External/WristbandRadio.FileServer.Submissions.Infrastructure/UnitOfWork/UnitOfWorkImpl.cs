@@ -16,7 +16,7 @@ public class UnitOfWorkImpl : IUnitOfWork
         MusicSubmissions = new MusicSubmissionRepository(_dapperDataContext);
     }
 
-    public async void BeginTransaction()
+    public async Task BeginTransaction()
     {
         var connection = await _dapperDataContext.GetConnection();
         if(connection.State != System.Data.ConnectionState.Open) connection.Open();
@@ -30,7 +30,7 @@ public class UnitOfWorkImpl : IUnitOfWork
         _dapperDataContext.Transaction = null;
     }
 
-    public async void CommitAndCloseConnection()
+    public async Task CommitAndCloseConnection()
     {
         var connection = await _dapperDataContext.GetConnection();
         _dapperDataContext.Transaction?.Commit();
@@ -47,7 +47,7 @@ public class UnitOfWorkImpl : IUnitOfWork
         _dapperDataContext.Transaction = null;
     }
 
-    protected virtual async void Dispose(bool disposing)
+    protected virtual async Task Dispose(bool disposing)
     {
         if (!_disposed)
         {

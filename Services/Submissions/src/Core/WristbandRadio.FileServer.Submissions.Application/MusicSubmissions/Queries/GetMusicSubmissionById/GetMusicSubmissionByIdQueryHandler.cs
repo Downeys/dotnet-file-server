@@ -1,6 +1,6 @@
 ﻿namespace WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetMusicSubmissionById;
 
-public class GetMusicSubmissionByIdQueryHandler : IRequestHandler<GetMusicSubmissionByIdQuery, MusicSubmissionResponseDto?>
+public class GetMusicSubmissionByIdQueryHandler : IRequestHandler<GetMusicSubmissionByIdQuery, MusicSubmission?>
 {
     private readonly ILogger<GetMusicSubmissionByIdQueryHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
@@ -10,20 +10,22 @@ public class GetMusicSubmissionByIdQueryHandler : IRequestHandler<GetMusicSubmis
         _logger = logger;
         _unitOfWork = unitOfWork;
     }
-    public async Task<MusicSubmissionResponseDto?> Handle(GetMusicSubmissionByIdQuery request, CancellationToken cancellationToken)
+    public async Task<MusicSubmission?> Handle(GetMusicSubmissionByIdQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("fetching music submission by id {Id}", request.id);
         var id = Guid.TryParse(request.id, out var guid) ? guid : throw new ArgumentException("Invalid ID format", nameof(request.id));
-        var musicSubmission = await _unitOfWork.MusicSubmissions.GetByIdAsync(id, nameof(MusicSubmissionDto.Id), nameof(MusicSubmissionDto.ArtistName), nameof(MusicSubmissionDto.ContactName), nameof(MusicSubmissionDto.ContactEmail), nameof(MusicSubmissionDto.ContactPhone), nameof(MusicSubmissionDto.OwnsRights));
+        var musicSubmission = await _unitOfWork.MusicSubmissions.GetByIdAsync(id, nameof(MusicSubmissionDto.Id), nameof(MusicSubmissionDto.ArtistName), nameof(MusicSubmissionDto.ContactName), nameof(MusicSubmissionDto.ContactEmail), nameof(MusicSubmissionDto.ContactPhone), nameof(MusicSubmissionDto.OwnsRights), nameof(MusicSubmissionDto.Status), nameof(MusicSubmissionDto.CreatedBy));
         if (musicSubmission != null)
         {
-            var musicSubmissionResponse = new MusicSubmissionResponseDto(
-                musicSubmission.Id,
+            var musicSubmissionResponse = MusicSubmission.Create(
                 musicSubmission.ArtistName,
                 musicSubmission.ContactName,
                 musicSubmission.ContactEmail,
                 musicSubmission.ContactPhone,
-                musicSubmission.OwnsRights
+                musicSubmission.OwnsRights,
+                musicSubmission.CreatedBy,
+                musicSubmission.Id,
+                musicSubmission.Status
             );
             return musicSubmissionResponse;
         }
