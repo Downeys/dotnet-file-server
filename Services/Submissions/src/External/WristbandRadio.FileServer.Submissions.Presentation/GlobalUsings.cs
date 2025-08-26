@@ -9,6 +9,7 @@ global using Swashbuckle.AspNetCore.SwaggerUI;
 global using WristbandRadio.FileServer.Common.Infrastructure;
 global using WristbandRadio.FileServer.PostgresDatabase;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.AddMusicSubmission;
+global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.RemoveMusicSubmission;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.UpdateMusicSubmissionStatus;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetMusicSubmissionById;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetPaginatedMusicSubmissions;
