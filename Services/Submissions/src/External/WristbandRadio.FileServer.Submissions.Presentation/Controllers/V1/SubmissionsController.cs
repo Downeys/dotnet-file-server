@@ -88,4 +88,17 @@ public sealed class SubmissionsController : ControllerBase
         }
         return NoContent();
     }
+
+    [HttpDelete("music-submission/{id:length(36)}")]
+    public async Task<IActionResult> RemoveMusicSubmission(string id)
+    {
+        _logger.LogInformation("Delete MusicSubmission method called");
+        var removeMusicSubmissionCommand = new RemoveMusicSubmissionCommand(Guid.Parse(id));
+        var result = await _sender.Send(removeMusicSubmissionCommand);
+        if (!result)
+        {
+            return NotFound();
+        }
+        return NoContent();
+    }
 }

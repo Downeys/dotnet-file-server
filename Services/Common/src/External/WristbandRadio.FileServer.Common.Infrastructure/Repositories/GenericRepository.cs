@@ -77,23 +77,23 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
     }
     public async Task SoftDeleteAsync(Guid id, bool softDeleteFromRelatedChildTables = false)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-        parameters.Add(ID, id, DbType.String, ParameterDirection.Input, size: 22);
-        using (var connection = await _dapperDataContext.GetConnection())
+        var tableName = typeof(T).GetDbTableName();
+        var removedBy = Guid.NewGuid(); // This should be the id of the user calling the api
+        var parameters = new { Id = id, RemovedBy = removedBy };
+        var sql = $"UPDATE {tableName} SET removed_datetime = NOW(), removed_by = @RemovedBy WHERE id = @Id";
+        var connection = await _dapperDataContext.GetConnection();
+        await connection.ExecuteAsync(sql, parameters);
+
+        if (softDeleteFromRelatedChildTables)
         {
-            await connection.ExecuteAsync("soft_delete_record", parameters, _dapperDataContext.Transaction, commandType: CommandType.StoredProcedure);
+            foreach (var associatedType in typeof(T).GetAssociatedTypes())
+            {
+                var childTableName = associatedType.Type.GetDbTableName();
+                var childForeignKeyColumn = associatedType.ForeignKeyProperty.GetDbColumnName();
+                var sql2 = $"UPDATE {childTableName} SET removed_datetime = NOW(), removed_by = @RemovedBy WHERE {childForeignKeyColumn} = @Id";
 
-            if (softDeleteFromRelatedChildTables)
-                foreach (var associatedType in typeof(T).GetAssociatedTypes())
-                {
-                    parameters = new DynamicParameters();
-                    parameters.Add(TABLE_NAME, associatedType.Type.GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-                    parameters.Add(COLUMN_NAME, associatedType.ForeignKeyProperty.GetDbColumnName(), DbType.String, ParameterDirection.Input, size: 50);
-                    parameters.Add(VALUE, id, DbType.String, ParameterDirection.Input, size: 22);
-
-                    await connection.ExecuteAsync("soft_delete_records_by_column", parameters, _dapperDataContext.Transaction, commandType: CommandType.StoredProcedure);
-                }
+                await connection.ExecuteAsync("soft_delete_records_by_column", parameters, _dapperDataContext.Transaction, commandType: CommandType.StoredProcedure);
+            }
         }
     }
     public async Task<int> GetTotalCountAsync()
