@@ -57,16 +57,35 @@ public sealed class SubmissionsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddMusicSubmission(MusicSubmissionInputDto musicSubmissionInput)
+    public async Task<IActionResult> AddMusicSubmission([FromForm] MusicSubmissionInputDto musicSubmissionInput)
     {
         _logger.LogInformation("Post MusicSubmissiono method called");
+        var files = musicSubmissionInput.Files;
+        if (files == null || files.Count == 0)
+        {
+            return BadRequest("No file uploaded.");
+        }
+
+        var audioFiles = files
+            .Where(file => file.ContentType == "audio/mp3" || file.ContentType == "video/webm" || file.ContentType == "audio/mpeg")
+            .Select(file => file.OpenReadStream()).ToList();
+
+        var imageFiles = files
+            .Where(file => file.ContentType.StartsWith("image"))
+            .Select(file => file.OpenReadStream()).ToList();
+
+        Guard.Against.NullOrEmpty(audioFiles);
+        Guard.Against.NullOrEmpty(imageFiles);
+
         var addMusicSubmissionCommand = new AddMusicSubmissionCommand
             (
                 musicSubmissionInput.ArtistName,
                 musicSubmissionInput.ContactName,
                 musicSubmissionInput.ContactEmail,
                 musicSubmissionInput.ContactPhone,
-                musicSubmissionInput.OwnsRights
+                musicSubmissionInput.OwnsRights,
+                audioFiles,
+                imageFiles
             );
         var submissionId = await _sender.Send(addMusicSubmissionCommand);
         return CreatedAtAction("AddMusicSubmission", new { id = submissionId });

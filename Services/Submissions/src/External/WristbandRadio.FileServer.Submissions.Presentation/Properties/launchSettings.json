@@ -32,7 +32,10 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7127;http://localhost:5038",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "BLOB_CONNECTION_STRING": "CONNECTIONSTRINGHERE",
+        "AUDIO_SUBMISSION_CONTAINER": "music-submission",
+        "IMAGE_SUBMISSION_CONTAINER": "photo-submission"
       }
     },
     "IIS Express": {

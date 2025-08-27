@@ -3,6 +3,7 @@
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+        services.AddTransient<IMusicSubmissionService, MusicSubmissionService>();
 
         return services;
     }

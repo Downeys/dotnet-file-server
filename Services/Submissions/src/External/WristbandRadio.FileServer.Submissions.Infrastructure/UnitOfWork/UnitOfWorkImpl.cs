@@ -5,6 +5,8 @@ public class UnitOfWorkImpl : IUnitOfWork
     private bool _disposed;
     private readonly DapperDataContext _dapperDataContext;
     public IMusicSubmissionRepository MusicSubmissions { get; private set; }
+    public IImageLinkRepository ImageLinks { get; private set; }
+    public IAudioLinkRepository AudioLinks { get; private set; }
     public UnitOfWorkImpl(DapperDataContext dapperDataContext)
     {
         _dapperDataContext = dapperDataContext;
@@ -14,6 +16,8 @@ public class UnitOfWorkImpl : IUnitOfWork
     private void Init()
     {
         MusicSubmissions = new MusicSubmissionRepository(_dapperDataContext);
+        ImageLinks = new ImageLinkRepository(_dapperDataContext);
+        AudioLinks = new AudioLinkRepository(_dapperDataContext);
     }
 
     public async Task BeginTransaction()
