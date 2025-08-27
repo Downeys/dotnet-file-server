@@ -3,20 +3,28 @@
 public class AddMusicSubmissionCommandHandler : IRequestHandler<AddMusicSubmissionCommand, Guid>
 {
     private readonly ILogger<AddMusicSubmissionCommandHandler> _logger;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMusicSubmissionBlobService _blobService;
+    private readonly IMusicSubmissionService _service;
 
-    public AddMusicSubmissionCommandHandler(ILogger<AddMusicSubmissionCommandHandler> logger, IUnitOfWork unitOfWork)
+    public AddMusicSubmissionCommandHandler(ILogger<AddMusicSubmissionCommandHandler> logger, IMusicSubmissionBlobService blobService, IMusicSubmissionService service)
     {
-        _logger = logger;
-        _unitOfWork = unitOfWork;
+        _logger = Guard.Against.Null(logger);
+        _blobService = Guard.Against.Null(blobService);
+        _service = Guard.Against.Null(service);
     }
 
     public async Task<Guid> Handle(AddMusicSubmissionCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Handling AddMusicSubmissionCommand.");
+
         var submissionEntity = ValidateRequest(request);
-        var submissionDto = MapToDto(submissionEntity);
-        var submissionId = await PersistSubmission(submissionDto);
+
+        var songs = UploadSongs(request.AudioFiles, cancellationToken);
+        var images = UploadImages(request.ImageFiles, cancellationToken);
+        submissionEntity.SetSongs(songs);
+        submissionEntity.SetImages(images);
+
+        var submissionId = await _service.PersistMusicSubmission(submissionEntity);
         return submissionId;
     }
 
@@ -33,27 +41,29 @@ public class AddMusicSubmissionCommandHandler : IRequestHandler<AddMusicSubmissi
         return submissionEntity;
     }
 
-    private MusicSubmissionDto MapToDto(MusicSubmission musicSubmission)
+    private List<BlobResource> UploadSongs(IEnumerable<Stream> audioFiles, CancellationToken cancellationToken)
     {
-        return new MusicSubmissionDto
+        var songs = new List<BlobResource>();
+        foreach (var file in audioFiles)
         {
-            Id = musicSubmission.Id,
-            ArtistName = musicSubmission.ArtistName,
-            ContactName = musicSubmission.ContactName,
-            ContactEmail = musicSubmission.ContactEmail,
-            ContactPhone = musicSubmission.ContactPhone,
-            OwnsRights = musicSubmission.OwnsRights,
-            CreatedBy = musicSubmission.CreatedBy,
-            CreatedDatetime = musicSubmission.CreatedDatetime,
-            Status = musicSubmission.Status
-        };
+            var fileName = Guid.NewGuid().ToString();
+            var audioUrl = _blobService.UploadSongSubmission(file, fileName, cancellationToken).Result;
+            songs.Add(audioUrl);
+            _logger.LogInformation("Uploaded song to {SongUrl}", audioUrl);
+        }
+        return songs;
     }
 
-    private async Task<Guid> PersistSubmission(MusicSubmissionDto submissionDto)
+    private List<BlobResource> UploadImages(IEnumerable<Stream> imageFiles, CancellationToken cancellationToken)
     {
-        await _unitOfWork.BeginTransaction();
-        var submissionId = await _unitOfWork.MusicSubmissions.AddAsync(submissionDto);
-        await _unitOfWork.CommitAndCloseConnection();
-        return submissionId;
+        var images = new List<BlobResource>();
+        foreach (var file in imageFiles)
+        {
+            var fileName = Guid.NewGuid().ToString();
+            var imageUrl = _blobService.UploadPhotoSubmission(file, fileName, cancellationToken).Result;
+            images.Add(imageUrl);
+            _logger.LogInformation("Uploaded photo to {PhotoUrl}", imageUrl);
+        }
+        return images;
     }
 }

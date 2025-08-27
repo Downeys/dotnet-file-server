@@ -258,12 +258,12 @@ ALTER TABLE submissions.music_submissions ADD CONSTRAINT pkey_music_submissions 
 CREATE TABLE IF NOT EXISTS submissions.music_submission_audio_links (
 	id uuid NOT NULL,
 	music_submission_id uuid NOT NULL,
-	audio_link_url TEXT NOT NULL,
+	audio_url TEXT NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
+	updated_by uuid,
 	removed_by uuid
 );
 
@@ -273,12 +273,12 @@ ALTER TABLE submissions.music_submission_audio_links ADD CONSTRAINT fkey_music_s
 CREATE TABLE IF NOT EXISTS submissions.music_submission_image_links (
 	id uuid NOT NULL,
 	music_submission_id uuid NOT NULL,
-	image_link_url TEXT NOT NULL,
+	image_url TEXT NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
+	updated_by uuid,
 	removed_by uuid
 );
 

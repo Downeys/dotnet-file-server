@@ -8,8 +8,10 @@ public static class DependencyInjection
             configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-        services.AddSingleton<IDbConnectionFactory>(_ => new DbConnectionFactory(connectionString));
-        services.AddScoped<DapperDataContext>();
+        services.AddSingleton<IDbConnectionFactory>(_ => new DbConnectionFactory(connectionString))
+            .AddTransient<IBlobService, BlobService>()
+            .AddScoped<DapperDataContext>();
+
         Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         return services;
     }

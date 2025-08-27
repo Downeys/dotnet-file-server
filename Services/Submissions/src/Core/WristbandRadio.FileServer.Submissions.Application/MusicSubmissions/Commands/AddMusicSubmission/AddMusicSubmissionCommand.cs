@@ -5,6 +5,8 @@ public record AddMusicSubmissionCommand(
         string ContactName,
         string ContactEmail,
         string ContactPhone,
-        bool OwnsRights
+        bool OwnsRights,
+        List<Stream> AudioFiles,
+        List<Stream> ImageFiles
     ) : IRequest<Guid>;
 

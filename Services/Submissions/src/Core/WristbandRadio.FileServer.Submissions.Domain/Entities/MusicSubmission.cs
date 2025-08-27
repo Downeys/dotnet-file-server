@@ -11,6 +11,8 @@ public sealed class MusicSubmission : Entity, IAggregateRoot
     public DateTime? CreatedDatetime { get; private set; }
     public Guid CreatedBy { get; private set; }
     public string Status { get; private set; }
+    public List<BlobResource>? Songs { get; private set; }
+    public List<BlobResource>? Images { get; private set; }
 
     private MusicSubmission(string artistName, string contactName, string contactEmail, string contactPhone, bool ownsRights, Guid createdBy, string? status)
     {
@@ -45,6 +47,15 @@ public sealed class MusicSubmission : Entity, IAggregateRoot
             : new MusicSubmission(artistName, contactName, contactEmail, contactPhone, ownsRights, createdBy, status);
     }
 
+    public void SetSongs(IEnumerable<BlobResource> songs)
+    {
+        Songs = [.. Guard.Against.NullOrEmpty(songs)];
+    }
+
+    public void SetImages(IEnumerable<BlobResource> images)
+    {
+        Images = [.. Guard.Against.NullOrEmpty(images)];
+    }
     public bool IsValid()
     {
         var validator = new MusicSubmissionValidator(this);
@@ -81,6 +92,30 @@ public sealed class MusicSubmission : Entity, IAggregateRoot
                 OwnsRights,
                 Status
             );
+    }
+
+    public List<ImageLinkDto> GetImageLinkDtos()
+    {
+        return Images?.Select(image => new ImageLinkDto
+        {
+            Id = Guid.Parse(image.BlobName),
+            MusicSubmissionId = Id,
+            ImageUrl = image.BlobUrl,
+            CreatedBy = CreatedBy,
+            CreatedDatetime = CreatedDatetime ?? DateTime.UtcNow
+        }).ToList() ?? new List<ImageLinkDto>();
+    }
+
+    public List<AudioLinkDto> GetAudioLinkDtos()
+    {
+        return Songs?.Select(song => new AudioLinkDto
+        {
+            Id = Guid.Parse(song.BlobName),
+            MusicSubmissionId = Id,
+            AudioUrl = song.BlobUrl,
+            CreatedBy = CreatedBy,
+            CreatedDatetime = CreatedDatetime ?? DateTime.UtcNow
+        }).ToList() ?? new List<AudioLinkDto>();
     }
 };
 

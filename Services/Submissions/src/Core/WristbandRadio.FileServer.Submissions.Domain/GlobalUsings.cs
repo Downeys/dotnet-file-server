@@ -1,9 +1,11 @@
 ﻿global using Ardalis.GuardClauses;
+global using Microsoft.AspNetCore.Http;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Text.RegularExpressions;
 global using WristbandRadio.FileServer.Common.Domain.Contracts.Entities;
 global using WristbandRadio.FileServer.Common.Domain.Contracts.Persistance;
 global using WristbandRadio.FileServer.Common.Domain.Contracts.Specification;
+global using WristbandRadio.FileServer.Common.Domain.Models;
 global using WristbandRadio.FileServer.Common.Domain.Utilities;
 global using WristbandRadio.FileServer.Common.Domain.Utilities.Custom_Attributes;
 global using WristbandRadio.FileServer.Submissions.Domain.Entities;
@@ -12,4 +14,3 @@ global using WristbandRadio.FileServer.Submissions.Domain.Models.Presentation;
 global using WristbandRadio.FileServer.Submissions.Domain.Specifications.MusicSubmissionSpecifications;
 global using WristbandRadio.FileServer.Submissions.Domain.Validators;
 global using static WristbandRadio.FileServer.Submissions.Domain.StaticData.MusicSubmissionValidationMessages;
-
