@@ -13,7 +13,7 @@ public class MusicSubmissionValidator : IValidator
     {
         var rule = new MusicSubmissionSpecifications.IsContactNameValid();
         var isOk = rule.IsSatisfiedBy(_musicSubmission);
-        if (!isOk) throw new ArgumentException(ContactNameInvalid);
+        if (!isOk) throw new InvalidSubmissionException(ContactNameInvalid);
         return Task.FromResult(isOk);
     }
 
@@ -21,7 +21,7 @@ public class MusicSubmissionValidator : IValidator
     {
         var rule = new MusicSubmissionSpecifications.IsEmailAddressValid();
         var isOk = rule.IsSatisfiedBy(_musicSubmission);
-        if (!isOk) throw new ArgumentException(ContactEmailInvalid);
+        if (!isOk) throw new InvalidSubmissionException(ContactEmailInvalid);
         return Task.FromResult(isOk);
     }
 
@@ -29,7 +29,7 @@ public class MusicSubmissionValidator : IValidator
     {
         var rule = new MusicSubmissionSpecifications.IsPhoneNumberValid();
         var isOk = rule.IsSatisfiedBy(_musicSubmission);
-        if (!isOk) throw new ArgumentException(ContactPhoneInvalid);
+        if (!isOk) throw new InvalidSubmissionException(ContactPhoneInvalid);
         return Task.FromResult(isOk);
     }
 
@@ -37,7 +37,7 @@ public class MusicSubmissionValidator : IValidator
     {
         var rule = new MusicSubmissionSpecifications.IsOwnershipAttestationChecked();
         var isOk = rule.IsSatisfiedBy(_musicSubmission);
-        if (!isOk) throw new ArgumentException(MissingAttestation);
+        if (!isOk) throw new InvalidSubmissionException(MissingAttestation);
         return Task.FromResult(isOk);
     }
 

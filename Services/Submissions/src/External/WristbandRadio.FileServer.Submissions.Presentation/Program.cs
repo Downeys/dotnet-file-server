@@ -12,13 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = GetConfiguration();
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 builder.Services.AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddDatabase(configuration)
     .AddCommonInfrastructure(configuration)
+    .AddCommonPresentation(configuration)
     .AddInfrastructure(configuration)
     .AddApplication(configuration);
 
@@ -33,7 +35,6 @@ builder.Services.AddApiVersioning(options =>
         options.GroupNameFormat = "'v'VVV";
         options.SubstituteApiVersionInUrl = true;
     });
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 var app = builder.Build();
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
@@ -53,6 +54,8 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
+
+app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 

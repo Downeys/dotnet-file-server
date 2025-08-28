@@ -2,4 +2,6 @@
 
 public sealed class SubmissionQueryParameters : QueryParameters
 {
+    public string? Status { get; set; }
+    public string? ArtistName { get; set; }
 }

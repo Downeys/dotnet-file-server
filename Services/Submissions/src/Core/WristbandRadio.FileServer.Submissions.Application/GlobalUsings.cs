@@ -9,6 +9,7 @@ global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Services;
 global using WristbandRadio.FileServer.Submissions.Domain.Contracts;
 global using WristbandRadio.FileServer.Submissions.Domain.Entities;
+global using WristbandRadio.FileServer.Submissions.Domain.Exceptions;
 global using WristbandRadio.FileServer.Submissions.Domain.Models;
 global using WristbandRadio.FileServer.Submissions.Domain.Models.Persistance;
 global using WristbandRadio.FileServer.Submissions.Domain.Models.Presentation;

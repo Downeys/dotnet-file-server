@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{03
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.PostgresDatabase", "PostgresDatabase\WristbandRadio.FileServer.PostgresDatabase.csproj", "{E102191F-71D6-4C0E-9542-031C9EF34356}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.Common.Presentation", "WristbandRadio.FileServer.Common.Presentation\WristbandRadio.FileServer.Common.Presentation.csproj", "{1273AE22-1E23-47B2-8964-AE7327FCC4D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{E102191F-71D6-4C0E-9542-031C9EF34356}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E102191F-71D6-4C0E-9542-031C9EF34356}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E102191F-71D6-4C0E-9542-031C9EF34356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1273AE22-1E23-47B2-8964-AE7327FCC4D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1273AE22-1E23-47B2-8964-AE7327FCC4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1273AE22-1E23-47B2-8964-AE7327FCC4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1273AE22-1E23-47B2-8964-AE7327FCC4D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +130,7 @@ Global
 		{772F5E01-68BC-49F0-B992-DD0146C3F410} = {AD2AA498-03C2-4DAC-B6FC-A4C77FF787FA}
 		{3BFE4F0D-A0EE-4881-8EAE-3856AAAFE5EE} = {80C38BF9-99BD-4332-A559-F91A3501981B}
 		{E102191F-71D6-4C0E-9542-031C9EF34356} = {0311C9D0-FE9E-43B3-BEC5-4547FF489E44}
+		{1273AE22-1E23-47B2-8964-AE7327FCC4D3} = {6A83E78D-3E99-4FEB-8381-217B51FBF90D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA9326DF-ACFD-4C60-B661-5F0BBB3C337B}

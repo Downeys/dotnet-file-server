@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\WristbandRadio.FileServer.Common.Presentation\WristbandRadio.FileServer.Common.Presentation.csproj" />
     <ProjectReference Include="..\..\Core\WristbandRadio.FileServer.Submissions.Application\WristbandRadio.FileServer.Submissions.Application.csproj" />
     <ProjectReference Include="..\WristbandRadio.FileServer.Submissions.Infrastructure\WristbandRadio.FileServer.Submissions.Infrastructure.csproj" />
   </ItemGroup>
