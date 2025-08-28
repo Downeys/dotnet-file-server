@@ -23,7 +23,8 @@ public sealed class UpdateMusicSubmissionStatusCommandHandler : IRequestHandler<
         }
 
         submissionEntity.UpdateStatus(request.Status);
-        if (!submissionEntity.IsValid()) return false;
+        var isValid = await submissionEntity.IsValid();
+        if (!isValid) return false;
 
         await _unitOfWork.BeginTransaction();
         await _unitOfWork.MusicSubmissions.UpdateAsync(submissionEntity.ToDto());

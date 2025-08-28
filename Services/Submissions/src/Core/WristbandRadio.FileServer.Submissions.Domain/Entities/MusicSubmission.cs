@@ -2,7 +2,6 @@
 
 public sealed class MusicSubmission : Entity, IAggregateRoot
 {
-    public Guid Id { get; private set; }
     public string ArtistName { get; private set; }
     public string ContactName { get; private set; }
     public string ContactEmail { get; private set; }
@@ -56,10 +55,10 @@ public sealed class MusicSubmission : Entity, IAggregateRoot
     {
         Images = [.. Guard.Against.NullOrEmpty(images)];
     }
-    public bool IsValid()
+    public async Task<bool> IsValid()
     {
         var validator = new MusicSubmissionValidator(this);
-        return validator.IsValid().Result;
+        return await validator.IsValid();
     }
 
     public void UpdateStatus(string status)
