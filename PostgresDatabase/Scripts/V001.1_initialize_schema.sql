@@ -228,7 +228,7 @@ ALTER TABLE music.spins ADD CONSTRAINT fkey_spins_song FOREIGN KEY (song_id) REF
 CREATE SCHEMA IF NOT EXISTS submissions;
 
 CREATE TABLE IF NOT EXISTS submissions.r_submission_types (
-	id uuid NOT NULL,
+	id INT AS IDENTITY,
 	submission_type_name VARCHAR(255) NOT NULL
 );
 
@@ -236,7 +236,7 @@ ALTER TABLE submissions.submission_types ADD CONSTRAINT pkey_submission_types PR
 
 CREATE TABLE IF NOT EXISTS submissions.music_submissions (
 	id uuid NOT NULL,
-	music_submission_type_id uuid NOT NULL,
+	submission_type_id uuid NOT NULL,
 	user_id uuid,
 	artist_name VARCHAR(255) NOT NULL,
 	contact_name VARCHAR(255) NOT NULL,
@@ -287,19 +287,19 @@ ALTER TABLE submissions.music_submission_image_links ADD CONSTRAINT fkey_music_s
 
 CREATE TABLE IF NOT EXISTS submissions.feedback_submissions (
 	id uuid NOT NULL,
-	user_id uuid,
 	contact_name VARCHAR(255) NOT NULL,
 	contact_email VARCHAR(255) NOT NULL,
 	contact_phone VARCHAR(20) NOT NULL,
-	submission_type_id uuid NOT NULL,
+	submission_type_id INT NOT NULL,
 	feedback_text TEXT NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
+	updated_by uuid,
 	removed_by uuid,
-	status VARCHAR(50) NOT NULL
+	status VARCHAR(50) NOT NULL,
+	paging_order INT GENERATED ALWAYS AS IDENTITY
 );
 
 ALTER TABLE submissions.feedback_submissions ADD CONSTRAINT pkey_feedback_submissions PRIMARY KEY (id);

@@ -3,11 +3,11 @@
 [ApiController]
 [Route("api/v{v:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
-public sealed class SubmissionsController : ControllerBase
+public sealed class MusicSubmissionsController : ControllerBase
 {
-    private readonly ILogger<SubmissionsController> _logger;
+    private readonly ILogger<MusicSubmissionsController> _logger;
     private readonly ISender _sender;
-    public SubmissionsController(ILogger<SubmissionsController> logger, ISender sender)
+    public MusicSubmissionsController(ILogger<MusicSubmissionsController> logger, ISender sender)
     {
         _logger = logger;
         _sender = sender;

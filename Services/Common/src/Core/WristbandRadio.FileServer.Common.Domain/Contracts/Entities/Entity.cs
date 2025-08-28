@@ -2,9 +2,9 @@
 public abstract class Entity
 {
     int? _requestedHashCode;
-    object _id = default!;
+    Guid _id = default!;
     private List<INotification> _domainEvents = [];
-    public virtual object Id
+    public virtual Guid Id
     {
         get
         {

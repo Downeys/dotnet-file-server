@@ -7,6 +7,7 @@ public class UnitOfWorkImpl : IUnitOfWork
     public IMusicSubmissionRepository MusicSubmissions { get; private set; }
     public IImageLinkRepository ImageLinks { get; private set; }
     public IAudioLinkRepository AudioLinks { get; private set; }
+    public IFeedbackSubmissionRepository FeedbackSubmissions { get; private set; }
     public UnitOfWorkImpl(DapperDataContext dapperDataContext)
     {
         _dapperDataContext = dapperDataContext;
@@ -18,6 +19,7 @@ public class UnitOfWorkImpl : IUnitOfWork
         MusicSubmissions = new MusicSubmissionRepository(_dapperDataContext);
         ImageLinks = new ImageLinkRepository(_dapperDataContext);
         AudioLinks = new AudioLinkRepository(_dapperDataContext);
+        FeedbackSubmissions = new FeedbackSubmissionRepository(_dapperDataContext);
     }
 
     public async Task BeginTransaction()

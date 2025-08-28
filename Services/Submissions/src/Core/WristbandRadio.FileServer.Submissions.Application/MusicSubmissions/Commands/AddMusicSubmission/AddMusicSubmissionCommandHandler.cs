@@ -17,7 +17,7 @@ public class AddMusicSubmissionCommandHandler : IRequestHandler<AddMusicSubmissi
     {
         _logger.LogInformation("Handling AddMusicSubmissionCommand.");
 
-        var submissionEntity = ValidateRequest(request);
+        var submissionEntity = await ValidateRequest(request);
 
         var songs = UploadSongs(request.AudioFiles, cancellationToken);
         var images = UploadImages(request.ImageFiles, cancellationToken);
@@ -28,7 +28,7 @@ public class AddMusicSubmissionCommandHandler : IRequestHandler<AddMusicSubmissi
         return submissionId;
     }
 
-    private MusicSubmission ValidateRequest(AddMusicSubmissionCommand request)
+    private async Task<MusicSubmission> ValidateRequest(AddMusicSubmissionCommand request)
     {
         var submissionEntity = MusicSubmission.Create(
             request.ArtistName,
@@ -37,7 +37,8 @@ public class AddMusicSubmissionCommandHandler : IRequestHandler<AddMusicSubmissi
             request.ContactPhone,
             request.OwnsRights,
             Guid.NewGuid()); // This should be the id of the user calling the api
-        if (!submissionEntity.IsValid()) throw new ArgumentException("Invalid music submission request."); // make a better exception
+        var isValid = await submissionEntity.IsValid();
+        if (!isValid) throw new ArgumentException("Invalid music submission request."); // make a better exception
         return submissionEntity;
     }
 
