@@ -57,7 +57,7 @@ public sealed class FeedbackSubmissionsController : ControllerBase
     //    return Ok(musicSubmission);
     //}
 
-    [HttpPost]
+    [HttpPost("feedback-submission")]
     public async Task<IActionResult> AddFeedbackSubmission([FromForm] FeedbackSubmissionInputDto feedbackSubmissionInput)
     {
         _logger.LogInformation("Post FeedbackSubmission method called");

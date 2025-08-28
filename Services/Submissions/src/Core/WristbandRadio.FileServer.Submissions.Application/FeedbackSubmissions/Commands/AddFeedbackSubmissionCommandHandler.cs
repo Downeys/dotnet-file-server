@@ -22,7 +22,7 @@ public class AddFeedbackSubmissionCommandHandler : IRequestHandler<AddFeedbackSu
             Guid.NewGuid() // This should be the id of the user calling the api
         );
         var isValid = await submissionEntity.IsValid();
-        if (!isValid) throw new ArgumentException("Invalid feedback submission request."); // make a better exception
+        if (!isValid) throw new InvalidSubmissionException("Invalid feedback submission request.");
 
         await _unitOfWork.BeginTransaction();
         var dto = submissionEntity.ToDto();

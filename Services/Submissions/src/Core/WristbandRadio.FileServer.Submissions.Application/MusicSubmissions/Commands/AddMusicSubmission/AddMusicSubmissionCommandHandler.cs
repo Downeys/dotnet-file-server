@@ -38,7 +38,7 @@ public class AddMusicSubmissionCommandHandler : IRequestHandler<AddMusicSubmissi
             request.OwnsRights,
             Guid.NewGuid()); // This should be the id of the user calling the api
         var isValid = await submissionEntity.IsValid();
-        if (!isValid) throw new ArgumentException("Invalid music submission request."); // make a better exception
+        if (!isValid) throw new InvalidSubmissionException("Invalid music submission request.");
         return submissionEntity;
     }
 

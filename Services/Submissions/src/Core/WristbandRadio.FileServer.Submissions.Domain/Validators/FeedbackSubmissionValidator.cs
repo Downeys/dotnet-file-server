@@ -12,7 +12,7 @@ public class FeedbackSubmissionValidator : IValidator
     {
         var rule = new FeedbackSubmissionSpecifications.IsContactNameValid();
         var isOk = rule.IsSatisfiedBy(_feedbackSubmission);
-        if (!isOk) throw new ArgumentException(ContactNameInvalid);
+        if (!isOk) throw new InvalidSubmissionException(ContactNameInvalid);
         return Task.FromResult(isOk);
     }
 
@@ -20,7 +20,7 @@ public class FeedbackSubmissionValidator : IValidator
     {
         var rule = new FeedbackSubmissionSpecifications.IsEmailAddressValid();
         var isOk = rule.IsSatisfiedBy(_feedbackSubmission);
-        if (!isOk) throw new ArgumentException(ContactEmailInvalid);
+        if (!isOk) throw new InvalidSubmissionException(ContactEmailInvalid);
         return Task.FromResult(isOk);
     }
 
@@ -28,7 +28,7 @@ public class FeedbackSubmissionValidator : IValidator
     {
         var rule = new FeedbackSubmissionSpecifications.IsPhoneNumberValid();
         var isOk = rule.IsSatisfiedBy(_feedbackSubmission);
-        if (!isOk) throw new ArgumentException(ContactPhoneInvalid);
+        if (!isOk) throw new InvalidSubmissionException(ContactPhoneInvalid);
         return Task.FromResult(isOk);
     }
 
@@ -36,7 +36,7 @@ public class FeedbackSubmissionValidator : IValidator
     {
         var rule = new FeedbackSubmissionSpecifications.IsFeedbackTextPresent();
         var isOk = rule.IsSatisfiedBy(_feedbackSubmission);
-        if (!isOk) throw new ArgumentException(MissingFeedbackText);
+        if (!isOk) throw new InvalidSubmissionException(MissingFeedbackText);
         return Task.FromResult(isOk);
     }
 
