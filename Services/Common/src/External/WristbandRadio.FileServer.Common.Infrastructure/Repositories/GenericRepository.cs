@@ -105,14 +105,13 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
     }
     public async Task<bool> IsExistingAsync(string distinguishingUniqueKeyValue)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-        parameters.Add(COLUMN_NAME, typeof(T).GetDistinguishingUniqueKeyName(), DbType.String, ParameterDirection.Input, size: 100);
-        parameters.Add(VALUE, distinguishingUniqueKeyValue, DbType.String, ParameterDirection.Input, size: 100);
+        var tableName = typeof(T).GetDbTableName();
+        var columnName = typeof(T).GetDistinguishingUniqueKeyName();
+        var parameters = new { DistinguishingUniquekeyColumnValue = distinguishingUniqueKeyValue };
+        var sql = $"SELECT COUNT(id) FROM {tableName} WHERE {columnName} = @DistinguishingUniquekeyColumnValue";
 
-        using (var connection = await _dapperDataContext.GetConnection())
-        {
-            return await connection.QuerySingleOrDefaultAsync<bool>("does_record_exist", parameters, commandType: CommandType.StoredProcedure);
-        }
+        var connection = await _dapperDataContext.GetConnection();
+        var count = await connection.QuerySingleOrDefaultAsync<int>(sql, parameters);
+        return count > 0;
     }
 }

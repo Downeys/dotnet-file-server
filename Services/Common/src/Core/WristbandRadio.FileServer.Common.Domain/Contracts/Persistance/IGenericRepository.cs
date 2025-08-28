@@ -9,4 +9,5 @@ public interface IGenericRepository<T> where T : IDbEntity
     public Task UpdateAsync(T entity);
     public Task SoftDeleteAsync(Guid id, bool softDeleteFromRelatedChildTables = false);
     public Task<int> GetTotalCountAsync();
+    public Task<bool> IsExistingAsync(string distinguishingUniqueKeyValue);
 }
