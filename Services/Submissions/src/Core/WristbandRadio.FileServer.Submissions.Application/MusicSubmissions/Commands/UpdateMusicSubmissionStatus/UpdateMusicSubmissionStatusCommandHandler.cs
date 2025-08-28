@@ -1,4 +1,4 @@
-﻿namespace WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.UpdateMusicSubmissionStatus;
+﻿ namespace WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.UpdateMusicSubmissionStatus;
 
 public sealed class UpdateMusicSubmissionStatusCommandHandler : IRequestHandler<UpdateMusicSubmissionStatusCommand, bool>
 {

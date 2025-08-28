@@ -98,13 +98,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : IDbEntity
     }
     public async Task<int> GetTotalCountAsync()
     {
-        var parameters = new DynamicParameters();
-        parameters.Add(TABLE_NAME, typeof(T).GetDbTableName(), DbType.String, ParameterDirection.Input, size: 50);
-
-        using (var connection = await _dapperDataContext.GetConnection())
-        {
-            return await connection.QuerySingleOrDefaultAsync<int>("get_total_records_count", parameters, commandType: CommandType.StoredProcedure);
-        }
+        var tableName = typeof(T).GetDbTableName();
+        var sql = $"SELECT COUNT(Id) FROM {tableName} WHERE removed_datetime IS NULL";
+        var connection = await _dapperDataContext.GetConnection();
+        return await connection.QuerySingleOrDefaultAsync<int>(sql);
     }
     public async Task<bool> IsExistingAsync(string distinguishingUniqueKeyValue)
     {
