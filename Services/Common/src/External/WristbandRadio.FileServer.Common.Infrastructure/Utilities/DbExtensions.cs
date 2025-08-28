@@ -58,7 +58,7 @@ public static class DbExtensions
 
     public static string GetDistinguishingUniqueKeyName(this Type type)
     {
-        return type.GetProperties().Where(p => p.GetCustomAttribute<DistinguishingUniqueKeyAttribute>() is not null).FirstOrDefault().Name;
+        return GetDbColumnName(type.GetProperties().FirstOrDefault(p => p.GetCustomAttribute<DistinguishingUniqueKeyAttribute>() is not null));
     }
 
     public static IQueryable<IDbEntity> OrderByCustom<IDbEntity>(this IQueryable<IDbEntity> items, string sortBy, string sortOrder)
