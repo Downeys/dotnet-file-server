@@ -17,7 +17,15 @@ public sealed class FeedbackSubmissionsController : ControllerBase
     public async Task<IActionResult> GetFeedbackSubmissions([FromQuery] SubmissionQueryParameters queryParameters)
     {
         _logger.LogInformation("Get FeedbackSubmission method called");
-        var feedbackSubmissions = await _sender.Send(new GetPaginatedFeedbackSubmissionsQuery(queryParameters));
+        PageList<FeedbackSubmissionResponseDto> feedbackSubmissions;
+        if (queryParameters.Status != null)
+            feedbackSubmissions = await _sender.Send(new GetPaginatedFeedbackSubmissionsByStatusQuery(queryParameters, queryParameters.Status));
+        else
+            feedbackSubmissions = await _sender.Send(new GetPaginatedFeedbackSubmissionsQuery(queryParameters));
+        if (feedbackSubmissions == null)
+        {
+            return NotFound();
+        }
         return Ok(feedbackSubmissions);
     }
 
