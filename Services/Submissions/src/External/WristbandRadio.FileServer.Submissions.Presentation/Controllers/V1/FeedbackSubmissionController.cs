@@ -61,7 +61,7 @@ public sealed class FeedbackSubmissionsController : ControllerBase
     }
 
     [HttpPut("feedback-submission/{id:length(36)}")]
-    public async Task<IActionResult> UpdateMusicSubmissionStatus(string id, UpdateFeedbackSubmissionInputDto updateFeedbackSubmissionInput)
+    public async Task<IActionResult> UpdateFeedbackSubmissionStatus(string id, UpdateFeedbackSubmissionInputDto updateFeedbackSubmissionInput)
     {
         _logger.LogInformation("Update FeedbackSubmission status method called");
         var updateFeedbackSubmissionStatusCommand = new UpdateFeedbackSubmissionStatusCommand
@@ -77,16 +77,16 @@ public sealed class FeedbackSubmissionsController : ControllerBase
         return NoContent();
     }
 
-    //[HttpDelete("music-submission/{id:length(36)}")]
-    //public async Task<IActionResult> RemoveMusicSubmission(string id)
-    //{
-    //    _logger.LogInformation("Delete MusicSubmission method called");
-    //    var removeMusicSubmissionCommand = new RemoveMusicSubmissionCommand(Guid.Parse(id));
-    //    var result = await _sender.Send(removeMusicSubmissionCommand);
-    //    if (!result)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return NoContent();
-    //}
+    [HttpDelete("feedback-submission/{id:length(36)}")]
+    public async Task<IActionResult> RemoveFeedbackSubmission(string id)
+    {
+        _logger.LogInformation("Delete FeedbackSubmission method called");
+        var removeFeedbackSubmissionCommand = new RemoveFeedbackSubmissionCommand(Guid.Parse(id));
+        var result = await _sender.Send(removeFeedbackSubmissionCommand);
+        if (!result)
+        {
+            return NotFound();
+        }
+        return NoContent();
+    }
 }
