@@ -1,4 +1,4 @@
-﻿namespace WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands;
+﻿namespace WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands.AddFeedbackSubmission;
 
 public class AddFeedbackSubmissionCommandHandler : IRequestHandler<AddFeedbackSubmissionCommand, Guid>
 {

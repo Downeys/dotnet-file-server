@@ -43,30 +43,6 @@ public sealed class FeedbackSubmissionsController : ControllerBase
         return Ok(feedbackSubmission.ToResponseDto());
     }
 
-    //[HttpGet("music-submission/artist/{artistName}")]
-    //public async Task<IActionResult> GetMusicSubmissionByArtistName([FromQuery] SubmissionQueryParameters queryParameters, string artistName)
-    //{
-    //    _logger.LogInformation("Get MusicSubmission by artist name method called");
-    //    var musicSubmission = await _sender.Send(new GetPaginatedMusicSubmissionsByArtistNameQuery(queryParameters, artistName));
-    //    if (musicSubmission == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return Ok(musicSubmission);
-    //}
-
-    //[HttpGet("music-submission/status/{status}")]
-    //public async Task<IActionResult> GetMusicSubmissionByStatus([FromQuery] SubmissionQueryParameters queryParameters, string status)
-    //{
-    //    _logger.LogInformation("Get MusicSubmission by status method called");
-    //    var musicSubmission = await _sender.Send(new GetPaginatedMusicSubmissionsByStatusQuery(queryParameters, status));
-    //    if (musicSubmission == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return Ok(musicSubmission);
-    //}
-
     [HttpPost("feedback-submission")]
     public async Task<IActionResult> AddFeedbackSubmission([FromForm] FeedbackSubmissionInputDto feedbackSubmissionInput)
     {
@@ -84,22 +60,22 @@ public sealed class FeedbackSubmissionsController : ControllerBase
         return CreatedAtAction("AddFeedbackSubmission", new { id = submissionId });
     }
 
-    //[HttpPut("music-submission/{id:length(36)}/status")]
-    //public async Task<IActionResult> UpdateMusicSubmissionStatus(string id, UpdateMusicSubmissionStatusInputDto updateMusicSubmissionStatusInput)
-    //{
-    //    _logger.LogInformation("Update MusicSubmission status method called");
-    //    var updateMusicSubmissionStatusCommand = new UpdateMusicSubmissionStatusCommand
-    //        (
-    //            Guid.Parse(id),
-    //            updateMusicSubmissionStatusInput.Status
-    //        );
-    //    var result = await _sender.Send(updateMusicSubmissionStatusCommand);
-    //    if (!result)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return NoContent();
-    //}
+    [HttpPut("feedback-submission/{id:length(36)}")]
+    public async Task<IActionResult> UpdateMusicSubmissionStatus(string id, UpdateFeedbackSubmissionInputDto updateFeedbackSubmissionInput)
+    {
+        _logger.LogInformation("Update FeedbackSubmission status method called");
+        var updateFeedbackSubmissionStatusCommand = new UpdateFeedbackSubmissionStatusCommand
+            (
+                Guid.Parse(id),
+                updateFeedbackSubmissionInput.Status
+            );
+        var result = await _sender.Send(updateFeedbackSubmissionStatusCommand);
+        if (!result)
+        {
+            return NotFound();
+        }
+        return NoContent();
+    }
 
     //[HttpDelete("music-submission/{id:length(36)}")]
     //public async Task<IActionResult> RemoveMusicSubmission(string id)

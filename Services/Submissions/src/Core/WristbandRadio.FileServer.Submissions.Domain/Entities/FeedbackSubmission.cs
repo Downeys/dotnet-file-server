@@ -16,7 +16,7 @@ public class FeedbackSubmission : Entity, IAggregateRoot
         SubmissionType submissionType,
         string feedbackText,
         Guid createdBy,
-        string status = "New")
+        string status = "new")
     {
         Id = Guid.NewGuid();
         ContactName = Guard.Against.NullOrEmpty(contactName);
@@ -35,7 +35,7 @@ public class FeedbackSubmission : Entity, IAggregateRoot
         SubmissionType submissionType,
         string feedbackText,
         Guid createdBy,
-        string status = "New")
+        string status = "new")
     {
         Id = Guard.Against.NullOrEmpty(id);
         ContactName = Guard.Against.NullOrEmpty(contactName);
@@ -54,7 +54,7 @@ public class FeedbackSubmission : Entity, IAggregateRoot
         string feedbackText,
         Guid createdBy,
         Guid? id = null,
-        string status = "New")
+        string status = "new")
     {
         // Add any necessary validation here
         return id != null
@@ -66,6 +66,11 @@ public class FeedbackSubmission : Entity, IAggregateRoot
     {
         var validator = new FeedbackSubmissionValidator(this);
         return await validator.IsValid();
+    }
+
+    public void UpdateStatus(string status)
+    {
+        Status = status;
     }
 
     public FeedbackSubmissionResponseDto ToResponseDto()
