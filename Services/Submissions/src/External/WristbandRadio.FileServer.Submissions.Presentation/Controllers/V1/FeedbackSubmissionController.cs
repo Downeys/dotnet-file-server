@@ -24,24 +24,24 @@ public sealed class FeedbackSubmissionsController : ControllerBase
             feedbackSubmissions = await _sender.Send(new GetPaginatedFeedbackSubmissionsByTypeQuery(queryParameters, Enum.Parse<SubmissionType>(queryParameters.SubmissionType)));
         else
             feedbackSubmissions = await _sender.Send(new GetPaginatedFeedbackSubmissionsQuery(queryParameters));
-        if (feedbackSubmissions == null)
+        if (feedbackSubmissions is null)
         {
             return NotFound();
         }
         return Ok(feedbackSubmissions);
     }
 
-    //[HttpGet("music-submission/{id:length(36)}")]
-    //public async Task<IActionResult> GetMusicSubmissionById(string id)
-    //{
-    //    _logger.LogInformation("Get MusicSubmission by Id method called");
-    //    var musicSubmission = await _sender.Send(new GetMusicSubmissionByIdQuery(id));
-    //    if (musicSubmission == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return Ok(musicSubmission.ToResponseDto());
-    //}
+    [HttpGet("feedback-submission/{id:length(36)}")]
+    public async Task<IActionResult> GetFeedbackSubmissionById(string id)
+    {
+        _logger.LogInformation("Get FeedbackSubmission by Id method called");
+        var feedbackSubmission = await _sender.Send(new GetFeedbackSubmissionByIdQuery(id));
+        if (feedbackSubmission is null)
+        {
+            return NotFound();
+        }
+        return Ok(feedbackSubmission.ToResponseDto());
+    }
 
     //[HttpGet("music-submission/artist/{artistName}")]
     //public async Task<IActionResult> GetMusicSubmissionByArtistName([FromQuery] SubmissionQueryParameters queryParameters, string artistName)
