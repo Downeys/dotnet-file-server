@@ -1,3 +1,3 @@
-﻿namespace WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands;
+﻿namespace WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands.AddFeedbackSubmission;
 
 public sealed record AddFeedbackSubmissionCommand(string ContactName, string ContactEmail, string ContactPhone, string FeedbackType, string FeedbackText): IRequest<Guid>;

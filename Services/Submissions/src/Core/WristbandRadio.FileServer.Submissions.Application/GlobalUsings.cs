@@ -5,6 +5,8 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using WristbandRadio.FileServer.Common.Domain.Models;
 global using WristbandRadio.FileServer.Common.Domain.Utilities;
+global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands.UpdateFeedbackSubmission;
+global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Queries.GetFeedbackSubmissionById;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetMusicSubmissionById;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Services;
 global using WristbandRadio.FileServer.Submissions.Domain.Contracts;
