@@ -1,4 +1,5 @@
 ﻿global using Ardalis.GuardClauses;
+global using Dapper;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using WristbandRadio.FileServer.Common.Domain.Contracts.Services;

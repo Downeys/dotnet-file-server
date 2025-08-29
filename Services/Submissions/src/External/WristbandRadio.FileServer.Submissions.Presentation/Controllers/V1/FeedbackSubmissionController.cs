@@ -14,12 +14,14 @@ public sealed class FeedbackSubmissionsController : ControllerBase
         _sender = sender;
     }
     [HttpGet]
-    public async Task<IActionResult> GetFeedbackSubmissions([FromQuery] SubmissionQueryParameters queryParameters)
+    public async Task<IActionResult> GetFeedbackSubmissions([FromQuery] FeedbackSubmissionQueryParameters queryParameters)
     {
         _logger.LogInformation("Get FeedbackSubmission method called");
         PageList<FeedbackSubmissionResponseDto> feedbackSubmissions;
         if (queryParameters.Status != null)
             feedbackSubmissions = await _sender.Send(new GetPaginatedFeedbackSubmissionsByStatusQuery(queryParameters, queryParameters.Status));
+        else if (queryParameters.SubmissionType != null)
+            feedbackSubmissions = await _sender.Send(new GetPaginatedFeedbackSubmissionsByTypeQuery(queryParameters, Enum.Parse<SubmissionType>(queryParameters.SubmissionType)));
         else
             feedbackSubmissions = await _sender.Send(new GetPaginatedFeedbackSubmissionsQuery(queryParameters));
         if (feedbackSubmissions == null)

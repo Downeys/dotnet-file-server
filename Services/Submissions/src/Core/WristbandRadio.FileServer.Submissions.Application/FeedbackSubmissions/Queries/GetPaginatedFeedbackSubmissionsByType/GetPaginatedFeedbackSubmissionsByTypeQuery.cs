@@ -1,0 +1,3 @@
+﻿namespace WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Queries.GetPaginatedFeedbackSubmissionsByType;
+
+public sealed record GetPaginatedFeedbackSubmissionsByTypeQuery(FeedbackSubmissionQueryParameters QueryParameters, SubmissionType SubmissionType) : IRequest<PageList<FeedbackSubmissionResponseDto>>;

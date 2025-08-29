@@ -1,7 +1,7 @@
 ﻿namespace WristbandRadio.FileServer.Submissions.Domain.Utilities;
 
-public sealed class SubmissionQueryParameters : QueryParameters
+public class FeedbackSubmissionQueryParameters : QueryParameters
 {
+    public string? SubmissionType { get; set; }
     public string? Status { get; set; }
-    public string? ArtistName { get; set; }
 }

@@ -16,6 +16,7 @@ global using WristbandRadio.FileServer.PostgresDatabase;
 global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands;
 global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Queries.GetPaginatedFeedbackSubmissions;
 global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Queries.GetPaginatedFeedbackSubmissionsByStatus;
+global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Queries.GetPaginatedFeedbackSubmissionsByType;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.AddMusicSubmission;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.RemoveMusicSubmission;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Commands.UpdateMusicSubmissionStatus;
@@ -23,6 +24,7 @@ global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetPaginatedMusicSubmissions;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetPaginatedMusicSubmissionsByArtistName;
 global using WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetPaginatedMusicSubmissionsByStatus;
+global using WristbandRadio.FileServer.Submissions.Domain.Models;
 global using WristbandRadio.FileServer.Submissions.Domain.Models.Presentation;
 global using WristbandRadio.FileServer.Submissions.Domain.Utilities;
 global using WristbandRadio.FileServer.Submissions.Infrastructure;
