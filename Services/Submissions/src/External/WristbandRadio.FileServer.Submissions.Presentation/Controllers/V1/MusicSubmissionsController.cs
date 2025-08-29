@@ -13,7 +13,7 @@ public sealed class MusicSubmissionsController : ControllerBase
         _sender = sender;
     }
     [HttpGet]
-    public async Task<IActionResult> GetMusicSubmissions([FromQuery]SubmissionQueryParameters queryParameters)
+    public async Task<IActionResult> GetMusicSubmissions([FromQuery]MusicSubmissionQueryParameters queryParameters)
     {
         _logger.LogInformation("Get MusicSubmission method called");
         PageList<MusicSubmissionResponseDto> musicSubmissions;

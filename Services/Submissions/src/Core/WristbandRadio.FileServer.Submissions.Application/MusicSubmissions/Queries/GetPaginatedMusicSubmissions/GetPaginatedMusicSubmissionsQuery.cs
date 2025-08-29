@@ -1,3 +1,3 @@
 ﻿namespace WristbandRadio.FileServer.Submissions.Application.MusicSubmissions.Queries.GetPaginatedMusicSubmissions;
 
-public record GetPaginatedMusicSubmissionsQuery(SubmissionQueryParameters QueryParameters) : IRequest<PageList<MusicSubmissionResponseDto>>;
+public record GetPaginatedMusicSubmissionsQuery(MusicSubmissionQueryParameters QueryParameters) : IRequest<PageList<MusicSubmissionResponseDto>>;
