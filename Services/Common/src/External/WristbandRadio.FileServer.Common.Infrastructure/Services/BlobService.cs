@@ -15,8 +15,16 @@ public class BlobService : IBlobService
         _logger.LogInformation("fetching blob from storage account");
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
         var blobClient = containerClient.GetBlobClient(fileName);
-        var downloadInfo = await blobClient.DownloadContentAsync(token);
-        return downloadInfo.Value.Content.ToStream();
+        var assetsPath = Path.Combine(".", "assets");
+        var savePath = Path.Combine(assetsPath, fileName);
+
+        if (!Directory.Exists(assetsPath))
+            Directory.CreateDirectory(assetsPath);
+
+        if (!File.Exists(savePath))
+            await blobClient.DownloadToAsync(savePath, token);
+
+        return File.OpenRead(savePath);
     }
 
     public async Task<BlobResource> UploadFileAsync(string containerName, string fileName, Stream fileStream, CancellationToken token = default)
