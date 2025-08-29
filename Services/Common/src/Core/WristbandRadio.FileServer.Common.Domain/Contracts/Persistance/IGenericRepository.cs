@@ -1,4 +1,4 @@
-﻿namespace WristbandRadio.FileServer.Common.Domain.Contracts.Persistance;
+﻿namespace WristbandRadio.FileServer.Common.Domain.Contracts.Persistence;
 
 public interface IGenericRepository<T> where T : IDbEntity
 {

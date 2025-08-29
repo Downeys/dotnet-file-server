@@ -7,16 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
-    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\WristbandRadio.FileServer.Common.Presentation\WristbandRadio.FileServer.Common.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\..\..\PostgresDatabase\WristbandRadio.FileServer.PostgresDatabase.csproj" />
     <ProjectReference Include="..\..\..\..\Common\src\External\WristbandRadio.FileServer.Common.Infrastructure\WristbandRadio.FileServer.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\..\Common\src\External\WristbandRadio.FileServer.Common.Presentation\WristbandRadio.FileServer.Common.Presentation.csproj" />
-    <ProjectReference Include="..\..\Core\WristbandRadio.FileServer.Streaming.Application\WristbandRadio.FileServer.Streaming.Application.csproj" />
+    <ProjectReference Include="..\..\Core\WristbandRadio.FileServer.Catalogue.Application\WristbandRadio.FileServer.Catalogue.Application.csproj" />
+    <ProjectReference Include="..\WristbandRadio.FileServer.Catalogue.Infrastructure\WristbandRadio.FileServer.Catalogue.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

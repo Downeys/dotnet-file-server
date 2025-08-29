@@ -51,7 +51,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{03
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.PostgresDatabase", "PostgresDatabase\WristbandRadio.FileServer.PostgresDatabase.csproj", "{E102191F-71D6-4C0E-9542-031C9EF34356}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.Common.Presentation", "WristbandRadio.FileServer.Common.Presentation\WristbandRadio.FileServer.Common.Presentation.csproj", "{1273AE22-1E23-47B2-8964-AE7327FCC4D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.Common.Presentation", "Services\Common\src\External\WristbandRadio.FileServer.Common.Presentation\WristbandRadio.FileServer.Common.Presentation.csproj", "{1273AE22-1E23-47B2-8964-AE7327FCC4D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalogue", "Catalogue", "{3160CE8E-5DEE-4CBF-9E78-BFCF35127BC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E39BA241-D1E5-45EB-BF0F-08DB43B9D1FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{ACD5DC22-ED35-4381-8003-069F0B0BBC9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{0FE72EB7-8EB0-4768-A086-AB28A3B3C66F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.Catalogue.Domain", "Services\Catalogue\src\Core\WristbandRadio.FileServer.Catalogue.Domain\WristbandRadio.FileServer.Catalogue.Domain.csproj", "{2A3E3313-C642-4788-9364-1CF0A129FF91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.Catalogue.Infrastructure", "Services\Catalogue\src\External\WristbandRadio.FileServer.Catalogue.Infrastructure\WristbandRadio.FileServer.Catalogue.Infrastructure.csproj", "{77429718-37FE-4641-B17E-111CC8735578}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.Catalogue.Application", "Services\Catalogue\src\Core\WristbandRadio.FileServer.Catalogue.Application\WristbandRadio.FileServer.Catalogue.Application.csproj", "{A08883AC-CF5D-421D-B1E6-03B6BCA29128}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristbandRadio.FileServer.Catalogue.Presentation", "Services\Catalogue\src\External\WristbandRadio.FileServer.Catalogue.Presentation\WristbandRadio.FileServer.Catalogue.Presentation.csproj", "{5BC23F49-1146-478E-9C7B-1DEEAED70DA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +119,22 @@ Global
 		{1273AE22-1E23-47B2-8964-AE7327FCC4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1273AE22-1E23-47B2-8964-AE7327FCC4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1273AE22-1E23-47B2-8964-AE7327FCC4D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A3E3313-C642-4788-9364-1CF0A129FF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A3E3313-C642-4788-9364-1CF0A129FF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A3E3313-C642-4788-9364-1CF0A129FF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A3E3313-C642-4788-9364-1CF0A129FF91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77429718-37FE-4641-B17E-111CC8735578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77429718-37FE-4641-B17E-111CC8735578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77429718-37FE-4641-B17E-111CC8735578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77429718-37FE-4641-B17E-111CC8735578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A08883AC-CF5D-421D-B1E6-03B6BCA29128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A08883AC-CF5D-421D-B1E6-03B6BCA29128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A08883AC-CF5D-421D-B1E6-03B6BCA29128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A08883AC-CF5D-421D-B1E6-03B6BCA29128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC23F49-1146-478E-9C7B-1DEEAED70DA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC23F49-1146-478E-9C7B-1DEEAED70DA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC23F49-1146-478E-9C7B-1DEEAED70DA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC23F49-1146-478E-9C7B-1DEEAED70DA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +163,14 @@ Global
 		{3BFE4F0D-A0EE-4881-8EAE-3856AAAFE5EE} = {80C38BF9-99BD-4332-A559-F91A3501981B}
 		{E102191F-71D6-4C0E-9542-031C9EF34356} = {0311C9D0-FE9E-43B3-BEC5-4547FF489E44}
 		{1273AE22-1E23-47B2-8964-AE7327FCC4D3} = {6A83E78D-3E99-4FEB-8381-217B51FBF90D}
+		{3160CE8E-5DEE-4CBF-9E78-BFCF35127BC1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E39BA241-D1E5-45EB-BF0F-08DB43B9D1FF} = {3160CE8E-5DEE-4CBF-9E78-BFCF35127BC1}
+		{ACD5DC22-ED35-4381-8003-069F0B0BBC9B} = {E39BA241-D1E5-45EB-BF0F-08DB43B9D1FF}
+		{0FE72EB7-8EB0-4768-A086-AB28A3B3C66F} = {E39BA241-D1E5-45EB-BF0F-08DB43B9D1FF}
+		{2A3E3313-C642-4788-9364-1CF0A129FF91} = {ACD5DC22-ED35-4381-8003-069F0B0BBC9B}
+		{77429718-37FE-4641-B17E-111CC8735578} = {0FE72EB7-8EB0-4768-A086-AB28A3B3C66F}
+		{A08883AC-CF5D-421D-B1E6-03B6BCA29128} = {ACD5DC22-ED35-4381-8003-069F0B0BBC9B}
+		{5BC23F49-1146-478E-9C7B-1DEEAED70DA8} = {0FE72EB7-8EB0-4768-A086-AB28A3B3C66F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA9326DF-ACFD-4C60-B661-5F0BBB3C337B}

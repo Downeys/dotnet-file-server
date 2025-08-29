@@ -9,7 +9,7 @@ global using System.Data;
 global using System.Linq.Expressions;
 global using System.Reflection;
 global using System.Text.RegularExpressions;
-global using WristbandRadio.FileServer.Common.Domain.Contracts.Persistance;
+global using WristbandRadio.FileServer.Common.Domain.Contracts.Persistence;
 global using WristbandRadio.FileServer.Common.Domain.Contracts.Services;
 global using WristbandRadio.FileServer.Common.Domain.Models;
 global using WristbandRadio.FileServer.Common.Domain.Utilities;

@@ -8,7 +8,7 @@ global using WristbandRadio.FileServer.Common.Domain.Utilities;
 global using WristbandRadio.FileServer.Common.Infrastructure.Database;
 global using WristbandRadio.FileServer.Common.Infrastructure.Repositories;
 global using WristbandRadio.FileServer.Submissions.Domain.Contracts;
-global using WristbandRadio.FileServer.Submissions.Domain.Models.Persistance;
+global using WristbandRadio.FileServer.Submissions.Domain.Models.Persistence;
 global using WristbandRadio.FileServer.Submissions.Infrastructure.Repositories;
 global using WristbandRadio.FileServer.Submissions.Infrastructure.Services;
 global using WristbandRadio.FileServer.Submissions.Infrastructure.UnitOfWork;

@@ -1,0 +1,35 @@
+﻿namespace WristbandRadio.FileServer.Catalogue.Domain.Models;
+
+public enum Genre
+{
+    Alternative,
+    Blues,
+    Classical,
+    Country,
+    Dance,
+    Electronic,
+    Folk,
+    HipHop,
+    Jazz,
+    Metal,
+    Pop,
+    RnB,
+    Reggae,
+    Rock,
+    Soul,
+    Punk,
+    Funk,
+    Disco,
+    Gospel,
+    Opera,
+    Ska,
+    Techno,
+    Trance,
+    House,
+    Dubstep,
+    Ambient,
+    Indie,
+    Grunge,
+    Bluegrass,
+    Swing
+}

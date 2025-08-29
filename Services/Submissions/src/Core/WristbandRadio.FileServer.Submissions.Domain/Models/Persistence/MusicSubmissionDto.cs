@@ -1,4 +1,4 @@
-﻿namespace WristbandRadio.FileServer.Submissions.Domain.Models.Persistance;
+﻿namespace WristbandRadio.FileServer.Submissions.Domain.Models.Persistence;
 [TableName("submissions.music_submissions")]
 public class MusicSubmissionDto : IDbEntity
 {
