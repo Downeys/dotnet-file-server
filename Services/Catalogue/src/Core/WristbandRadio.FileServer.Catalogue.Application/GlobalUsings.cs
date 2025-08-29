@@ -1,0 +1,10 @@
+﻿global using Ardalis.GuardClauses;
+global using MediatR;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using WristbandRadio.FileServer.Catalogue.Domain.Contracts;
+global using WristbandRadio.FileServer.Catalogue.Domain.Models;
+global using WristbandRadio.FileServer.Catalogue.Domain.Models.Persistence;
+global using WristbandRadio.FileServer.Catalogue.Domain.Models.Presentation;
+global using WristbandRadio.FileServer.Common.Domain.Utilities;

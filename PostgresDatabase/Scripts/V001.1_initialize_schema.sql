@@ -102,105 +102,66 @@ CREATE TABLE IF NOT EXISTS music.artists (
 	id uuid NOT NULL,
 	artist_name VARCHAR(255) NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
+	updated_by uuid,
+	removed_by uuid,
+	paging_order INT GENERATED ALWAYS AS IDENTITY
 );
 
 ALTER TABLE music.artists ADD CONSTRAINT pkey_artists PRIMARY KEY (id);
-
-CREATE TABLE IF NOT EXISTS music.purchase_links (
-	id uuid NOT NULL,
-	purchase_link_url TEXT NOT NULL,
-	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	removed_datetime TIMESTAMP WITH TIME ZONE,
-	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
-);
-
-ALTER TABLE music.purchase_links ADD CONSTRAINT pkey_purchase_links PRIMARY KEY (id);
-
-CREATE TABLE IF NOT EXISTS music.image_links (
-	id uuid NOT NULL,
-	image_link_url TEXT NOT NULL,
-	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	removed_datetime TIMESTAMP WITH TIME ZONE,
-	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
-);
-
-ALTER TABLE music.image_links ADD CONSTRAINT pkey_image_links PRIMARY KEY (id);
-
-CREATE TABLE IF NOT EXISTS music.audio_links (
-	id uuid NOT NULL,
-	audio_link_url TEXT NOT NULL,
-	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	removed_datetime TIMESTAMP WITH TIME ZONE,
-	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
-);
-
-ALTER TABLE music.audio_links ADD CONSTRAINT pkey_audio_links PRIMARY KEY (id);
 
 CREATE TABLE IF NOT EXISTS music.albums (
 	id uuid NOT NULL,
 	album_name VARCHAR(255) NOT NULL,
 	artist_id uuid NOT NULL,
-	purchase_link_id uuid,
-	image_link_id uuid NOT NULL,
+	album_purchase_url TEXT,
+	album_art_url TEXT NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
+	updated_by uuid,
+	removed_by uuid,
+	paging_order INT GENERATED ALWAYS AS IDENTITY
 );
 
 ALTER TABLE music.albums ADD CONSTRAINT pkey_albums PRIMARY KEY (id);
 ALTER TABLE music.albums ADD CONSTRAINT fkey_albums_artist FOREIGN KEY (artist_id) REFERENCES music.artists (id);
-ALTER TABLE music.albums ADD CONSTRAINT fkey_albums_purchase_link FOREIGN KEY (purchase_link_id) REFERENCES music.purchase_links (id);
-ALTER TABLE music.albums ADD CONSTRAINT fkey_albums_image_link FOREIGN KEY (image_link_id) REFERENCES music.image_links (id);
 
 CREATE TABLE IF NOT EXISTS music.r_genres (
-	id uuid NOT NULL,
+	id INT NOT NULL,
 	genre_name VARCHAR(255) NOT NULL
 );
 
-ALTER TABLE music.genres ADD CONSTRAINT pkey_genres PRIMARY KEY (id);
+ALTER TABLE music.r_genres ADD CONSTRAINT pkey_r_genres PRIMARY KEY (id);
 
 CREATE TABLE IF NOT EXISTS music.songs (
 	id uuid NOT NULL,
 	song_name VARCHAR(255) NOT NULL,
 	artist_id uuid NOT NULL,
 	album_id uuid NOT NULL,
-	audio_link_id uuid NOT NULL,
-	purchase_link_id uuid,
-	genre_1 uuid NOT NULL,
-	genre_2 uuid,
-	genre_3 uuid,
-	genre_4 uuid,
-	genre_5 uuid,
+	audio_url TEXT NOT NULL,
+	track_purchase_url TEXT,
+	genre_1 INT NOT NULL,
+	genre_2 INT,
+	genre_3 INT,
+	genre_4 INT,
+	genre_5 INT,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
+	updated_by uuid,
+	removed_by uuid,
+	paging_order INT GENERATED ALWAYS AS IDENTITY,
+	is_explicit BOOLEAN
 );
 
 ALTER TABLE music.songs ADD CONSTRAINT pkey_songs PRIMARY KEY (id);
 ALTER TABLE music.songs ADD CONSTRAINT fkey_songs_artist FOREIGN KEY (artist_id) REFERENCES music.artists (id);
 ALTER TABLE music.songs ADD CONSTRAINT fkey_songs_album FOREIGN KEY (album_id) REFERENCES music.albums (id);
-ALTER TABLE music.songs ADD CONSTRAINT fkey_songs_audio_link FOREIGN KEY (audio_link_id) REFERENCES music.audio_links (id);
-ALTER TABLE music.songs ADD CONSTRAINT fkey_songs_purchase_link FOREIGN KEY (purchase_link_id) REFERENCES music.purchase_links (id);
 ALTER TABLE music.songs ADD CONSTRAINT fkey_songs_genre_1 FOREIGN KEY (genre_1) REFERENCES music.r_genres (id);
 ALTER TABLE music.songs ADD CONSTRAINT fkey_songs_genre_2 FOREIGN KEY (genre_2) REFERENCES music.r_genres (id);
 ALTER TABLE music.songs ADD CONSTRAINT fkey_songs_genre_3 FOREIGN KEY (genre_3) REFERENCES music.r_genres (id);
@@ -214,15 +175,36 @@ CREATE TABLE IF NOT EXISTS music.spins(
 	start_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
 	end_datetime TIMESTAMP WITH TIME ZONE,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
+	updated_by uuid,
 	removed_by uuid
 );
 
 ALTER TABLE music.spins ADD CONSTRAINT pkey_spins PRIMARY KEY (id);
 ALTER TABLE music.spins ADD CONSTRAINT fkey_spins_song FOREIGN KEY (song_id) REFERENCES music.songs (id);
+
+CREATE VIEW music.tracks AS
+SELECT
+    s.id,
+    s.song_name,
+    s.audio_url,
+    s.track_purchase_url,
+    art.artist_name,
+    ab.album_name,
+    ab.album_art_url,
+    s.genre_1,
+    s.genre_2,
+    s.genre_3,
+    s.genre_4,
+    s.genre_5,
+    s.paging_order,
+	s.is_explicit,
+	s.removed_datetime
+FROM music.songs s
+LEFT JOIN music.artists art ON s.artist_id = art.id
+LEFT JOIN music.albums ab ON s.album_id = ab.id;
 
 -- Create submissions schema for data submitted by users
 CREATE SCHEMA IF NOT EXISTS submissions;
