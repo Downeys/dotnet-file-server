@@ -12,8 +12,8 @@ public class GetMusicSubmissionByIdQueryHandler : IRequestHandler<GetMusicSubmis
     }
     public async Task<MusicSubmission?> Handle(GetMusicSubmissionByIdQuery request, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("fetching music submission by id {Id}", request.id);
-        var id = Guid.TryParse(request.id, out var guid) ? guid : throw new ArgumentException("Invalid ID format", nameof(request.id));
+        _logger.LogInformation("fetching music submission by id {Id}", request.Id);
+        var id = Guid.TryParse(request.Id, out var guid) ? guid : throw new ArgumentException("Invalid ID format", nameof(request.Id));
         var musicSubmission = await _unitOfWork.MusicSubmissions.GetByIdAsync(id, nameof(MusicSubmissionDto.Id), nameof(MusicSubmissionDto.ArtistName), nameof(MusicSubmissionDto.ContactName), nameof(MusicSubmissionDto.ContactEmail), nameof(MusicSubmissionDto.ContactPhone), nameof(MusicSubmissionDto.OwnsRights), nameof(MusicSubmissionDto.Status), nameof(MusicSubmissionDto.CreatedBy));
         if (musicSubmission != null)
         {

@@ -14,6 +14,7 @@ global using WristbandRadio.FileServer.Common.Infrastructure;
 global using WristbandRadio.FileServer.Common.Presentation;
 global using WristbandRadio.FileServer.PostgresDatabase;
 global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands.AddFeedbackSubmission;
+global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands.RemoveFeedbackSubmission;
 global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Commands.UpdateFeedbackSubmission;
 global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Queries.GetFeedbackSubmissionById;
 global using WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Queries.GetPaginatedFeedbackSubmissions;
