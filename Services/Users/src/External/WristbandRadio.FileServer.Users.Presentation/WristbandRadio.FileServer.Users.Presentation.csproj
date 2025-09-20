@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\PostgresDatabase\WristbandRadio.FileServer.PostgresDatabase.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\src\Core\WristbandRadio.FileServer.Common.Application\WristbandRadio.FileServer.Common.Application.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\src\External\WristbandRadio.FileServer.Common.Infrastructure\WristbandRadio.FileServer.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\src\External\WristbandRadio.FileServer.Common.Presentation\WristbandRadio.FileServer.Common.Presentation.csproj" />
+    <ProjectReference Include="..\..\Core\WristbandRadio.FileServer.Users.Application\WristbandRadio.FileServer.Users.Application.csproj" />
+    <ProjectReference Include="..\WristbandRadio.FileServer.Users.Infrastructure\WristbandRadio.FileServer.Users.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

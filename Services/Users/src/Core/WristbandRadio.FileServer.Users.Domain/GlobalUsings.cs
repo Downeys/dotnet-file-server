@@ -1,0 +1,17 @@
+﻿global using Ardalis.GuardClauses;
+global using System.Diagnostics.CodeAnalysis;
+global using System.Net;
+global using System.Text.RegularExpressions;
+global using WristbandRadio.FileServer.Common.Domain.Contracts.Entities;
+global using WristbandRadio.FileServer.Common.Domain.Contracts.Persistence;
+global using WristbandRadio.FileServer.Common.Domain.Contracts.Specification;
+global using WristbandRadio.FileServer.Common.Domain.Exceptions;
+global using WristbandRadio.FileServer.Common.Domain.Utilities;
+global using WristbandRadio.FileServer.Common.Domain.Utilities.Custom_Attributes;
+global using WristbandRadio.FileServer.Users.Domain.Entities;
+global using WristbandRadio.FileServer.Users.Domain.Exceptions;
+global using WristbandRadio.FileServer.Users.Domain.Models.Persistance;
+global using WristbandRadio.FileServer.Users.Domain.Models.Presentation;
+global using WristbandRadio.FileServer.Users.Domain.Specifications.Users;
+global using WristbandRadio.FileServer.Users.Domain.Validators;
+global using static WristbandRadio.FileServer.Users.Domain.StaticData.UserValidationMessages;
