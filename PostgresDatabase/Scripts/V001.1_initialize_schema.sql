@@ -2,97 +2,61 @@
 
 CREATE SCHEMA IF NOT EXISTS users;
 
-CREATE TABLE IF NOT EXISTS users.r_user_types (
-	id uuid NOT NULL,
-	user_type_name VARCHAR(255) NOT NULL
-);
-
-ALTER TABLE users.r_user_types ADD CONSTRAINT pkey_r_user_types PRIMARY KEY (id);
-
-CREATE TABLE IF NOT EXISTS users.user_types (
-	id uuid NOT NULL,
-	user_id uuid NOT NULL,
-	user_type_id uuid NOT NULL,
-	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	removed_datetime TIMESTAMP WITH TIME ZONE,
-	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
-);
-
-ALTER TABLE users.user_types ADD CONSTRAINT pkey_user_types PRIMARY KEY (id);
-ALTER TABLE users.user_types ADD CONSTRAINT fkey_user_types_user_type FOREIGN KEY (user_type_id) REFERENCES users.r_user_types (id);
-
 CREATE TABLE IF NOT EXISTS users.r_roles (
-	id uuid NOT NULL,
+	id INT NOT NULL,
 	role_name VARCHAR(255) NOT NULL
 );
 
 ALTER TABLE users.r_roles ADD CONSTRAINT pkey_r_roles PRIMARY KEY (id);
 
-CREATE TABLE IF NOT EXISTS users.user_roles (
+CREATE TABLE IF NOT EXISTS users.user_global_roles (
 	id uuid NOT NULL,
 	user_id uuid NOT NULL,
-	role_id uuid NOT NULL,
+	role_id INT NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
+	updated_by uuid,
 	removed_by uuid
 );
 
-ALTER TABLE users.user_roles ADD CONSTRAINT pkey_user_roles PRIMARY KEY (id);
-ALTER TABLE users.user_roles ADD CONSTRAINT fkey_user_roles_role FOREIGN KEY (role_id) REFERENCES users.r_roles (id);
+ALTER TABLE users.user_global_roles ADD CONSTRAINT pkey_user_global_roles PRIMARY KEY (id);
+ALTER TABLE users.user_global_roles ADD CONSTRAINT fkey_user_global_roles_role FOREIGN KEY (role_id) REFERENCES users.r_roles (id);
 
-CREATE TABLE IF NOT EXISTS users.artist_user_roles (
+CREATE TABLE IF NOT EXISTS users.user_artist_roles (
 	id uuid NOT NULL,
 	user_id uuid NOT NULL,
-	role_id uuid NOT NULL,
+	role_id INT NOT NULL,
 	artist_id uuid NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
+	updated_by uuid,
 	removed_by uuid
 );
 
-ALTER TABLE users.artist_user_roles ADD CONSTRAINT pkey_artist_user_roles PRIMARY KEY (id);
-ALTER TABLE users.artist_user_roles ADD CONSTRAINT fkey_artist_user_roles_role FOREIGN KEY (role_id) REFERENCES users.r_roles (id);
-ALTER TABLE users.artist_user_roles ADD CONSTRAINT fkey_artist_user_roles_artist FOREIGN KEY (artist_id) REFERENCES music.artists (id);
+ALTER TABLE users.user_artist_roles ADD CONSTRAINT user_artist_roles PRIMARY KEY (id);
+ALTER TABLE users.user_artist_roles ADD CONSTRAINT fkey_user_artist_roles_role FOREIGN KEY (role_id) REFERENCES users.r_roles (id);
+ALTER TABLE users.user_artist_roles ADD CONSTRAINT fkey_user_artist_roles_artist FOREIGN KEY (artist_id) REFERENCES music.artists (id);
 
-CREATE TABLE IF NOT EXISTS users.internal_users (
-	id uuid NOT NULL,
-	first_name VARCHAR(255) NOT NULL,
-	last_name VARCHAR(255) NOT NULL,
-	email VARCHAR(255) NOT NULL,
-	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	removed_datetime TIMESTAMP WITH TIME ZONE,
-	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
-);
-
-ALTER TABLE users.internal_users ADD CONSTRAINT pkey_internal_users PRIMARY KEY (id);
-
-CREATE TABLE IF NOT EXISTS users.external_users (
+CREATE TABLE IF NOT EXISTS users.users (
 	id uuid NOT NULL,
 	username VARCHAR(255),
 	first_name VARCHAR(255),
 	last_name VARCHAR(255),
 	email VARCHAR(255) NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
-	updated_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
+	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
 	created_by uuid NOT NULL,
-	updated_by uuid NOT NULL,
-	removed_by uuid
+	updated_by uuid,
+	removed_by uuid,
+	paging_order INT GENERATED ALWAYS AS IDENTITY
 );
 
-ALTER TABLE users.external_users ADD CONSTRAINT pkey_external_users PRIMARY KEY (id);
+ALTER TABLE users.users ADD CONSTRAINT pkey_users PRIMARY KEY (id);
 
 -- Create music schema for music-related data
 
