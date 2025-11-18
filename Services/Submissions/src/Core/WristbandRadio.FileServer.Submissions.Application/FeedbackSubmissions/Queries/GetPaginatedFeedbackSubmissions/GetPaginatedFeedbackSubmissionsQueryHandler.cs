@@ -29,6 +29,6 @@ public class GetPaginatedFeedbackSubmissionsQueryHandler : IRequestHandler<GetPa
             ).ToResponseDto()).ToList();
             return PageList<FeedbackSubmissionResponseDto>.Create(feedbackSubmissionResponses, feedbackSubmissions.PageNumber, feedbackSubmissions.PageSize, feedbackSubmissions.TotalCount);
         }
-        return PageList<FeedbackSubmissionResponseDto>.Create(new List<FeedbackSubmissionResponseDto>(), feedbackSubmissions.PageNumber, feedbackSubmissions.PageSize, feedbackSubmissions.TotalCount);
+        return PageList<FeedbackSubmissionResponseDto>.Create(new List<FeedbackSubmissionResponseDto>(), 1, 0, 0);
     }
 }

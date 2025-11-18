@@ -5,9 +5,23 @@ CREATE SCHEMA IF NOT EXISTS users;
 CREATE TABLE IF NOT EXISTS users.r_roles (
 	id INT NOT NULL,
 	role_name VARCHAR(255) NOT NULL
+	role_description TEXT NOT NULL
 );
 
 ALTER TABLE users.r_roles ADD CONSTRAINT pkey_r_roles PRIMARY KEY (id);
+
+INSERT INTO users.r_roles (id, role_name, role_description) 
+VALUES (
+	1,
+	'wristband-admin',
+	'General admin privileges'
+);
+INSERT INTO users.r_roles (id, role_name, role_description) 
+VALUES (
+	2,
+	'artist-owner',
+	'This person has ownership rights over an artist and all the albums and songs of the artist.'
+);
 
 CREATE TABLE IF NOT EXISTS users.user_global_roles (
 	id uuid NOT NULL,
@@ -65,6 +79,8 @@ CREATE SCHEMA IF NOT EXISTS music;
 CREATE TABLE IF NOT EXISTS music.artists (
 	id uuid NOT NULL,
 	artist_name VARCHAR(255) NOT NULL,
+	hometown_zipcode VARCHAR(10) NOT NULL,
+	current_zipcode VARCHAR(10) NOT NULL,
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
 	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
@@ -101,6 +117,19 @@ CREATE TABLE IF NOT EXISTS music.r_genres (
 
 ALTER TABLE music.r_genres ADD CONSTRAINT pkey_r_genres PRIMARY KEY (id);
 
+
+INSERT INTO music.r_genres (id, genre_name) VALUES (0, 'metal');
+INSERT INTO music.r_genres (id, genre_name) VALUES (1, 'alternative');
+INSERT INTO music.r_genres (id, genre_name) VALUES (2, 'blues');
+INSERT INTO music.r_genres (id, genre_name) VALUES (3, 'classical');
+INSERT INTO music.r_genres (id, genre_name) VALUES (4, 'country');
+INSERT INTO music.r_genres (id, genre_name) VALUES (5, 'dance');
+INSERT INTO music.r_genres (id, genre_name) VALUES (6, 'electronic');
+INSERT INTO music.r_genres (id, genre_name) VALUES (7, 'folk');
+INSERT INTO music.r_genres (id, genre_name) VALUES (8, 'hiphop');
+INSERT INTO music.r_genres (id, genre_name) VALUES (9, 'jazz');
+INSERT INTO music.r_genres (id, genre_name) VALUES (10, 'pop');
+
 CREATE TABLE IF NOT EXISTS music.songs (
 	id uuid NOT NULL,
 	song_name VARCHAR(255) NOT NULL,
@@ -108,11 +137,14 @@ CREATE TABLE IF NOT EXISTS music.songs (
 	album_id uuid NOT NULL,
 	audio_url TEXT NOT NULL,
 	track_purchase_url TEXT,
+	album_order INT,
 	genre_1 INT NOT NULL,
 	genre_2 INT,
 	genre_3 INT,
 	genre_4 INT,
 	genre_5 INT,
+	is_explicit BOOLEAN,
+	status VARCHAR(24),
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
 	updated_datetime TIMESTAMP WITH TIME ZONE,
 	removed_datetime TIMESTAMP WITH TIME ZONE,
@@ -120,7 +152,6 @@ CREATE TABLE IF NOT EXISTS music.songs (
 	updated_by uuid,
 	removed_by uuid,
 	paging_order INT GENERATED ALWAYS AS IDENTITY,
-	is_explicit BOOLEAN
 );
 
 ALTER TABLE music.songs ADD CONSTRAINT pkey_songs PRIMARY KEY (id);
@@ -151,7 +182,7 @@ ALTER TABLE music.spins ADD CONSTRAINT fkey_spins_song FOREIGN KEY (song_id) REF
 
 CREATE VIEW music.tracks AS
 SELECT
-    s.id,
+    s.id AS song_id,
     s.song_name,
     s.audio_url,
     s.track_purchase_url,
@@ -165,10 +196,50 @@ SELECT
     s.genre_5,
     s.paging_order,
 	s.is_explicit,
+	s.status,
 	s.removed_datetime
 FROM music.songs s
 LEFT JOIN music.artists art ON s.artist_id = art.id
 LEFT JOIN music.albums ab ON s.album_id = ab.id;
+
+CREATE VIEW music.user_owned_tracks AS
+SELECT
+	uar.user_id,
+	s.id AS song_id,
+    s.song_name,
+    s.audio_url,
+    s.track_purchase_url,
+    art.artist_name,
+    ab.album_name,
+    ab.album_art_url,
+    s.genre_1,
+    s.genre_2,
+    s.genre_3,
+    s.genre_4,
+    s.genre_5,
+    s.paging_order,
+	s.is_explicit,
+	s.status,
+	s.removed_datetime
+FROM users.user_artist_roles uar
+LEFT JOIN music.artists art ON uar.artist_id = art.id
+LEFT JOIN music.albums ab ON uar.artist_id = ab.artist_id
+LEFT JOIN music.songs s ON uar.artist_id = s.artist_id
+WHERE uar.role_id=2;
+
+CREATE VIEW music.artist_albums AS
+SELECT
+	ar.id as artist_id
+	ar.artist_name,
+	ar.hometown_zipcode,
+	ar.current_zipcode,
+	al.id as album_id,
+	al.album_name,
+	al.album_art_url,
+	al.album_purchase_url
+FROM music.artists ar
+LEFT JOIN music.albums al ON ar.id = al.artist_id;
+
 
 -- Create submissions schema for data submitted by users
 CREATE SCHEMA IF NOT EXISTS submissions;

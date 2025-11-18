@@ -1,9 +1,12 @@
-﻿global using Microsoft.Extensions.Configuration;
+﻿global using Dapper;
+global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using WristbandRadio.FileServer.Catalogue.Domain.Contracts;
 global using WristbandRadio.FileServer.Catalogue.Domain.Contracts.Repositories;
 global using WristbandRadio.FileServer.Catalogue.Domain.Models.Persistence;
+global using WristbandRadio.FileServer.Catalogue.Domain.Utilities;
 global using WristbandRadio.FileServer.Catalogue.Infrastructure.Repositories;
 global using WristbandRadio.FileServer.Catalogue.Infrastructure.UnitOfWork;
+global using WristbandRadio.FileServer.Common.Domain.Utilities;
 global using WristbandRadio.FileServer.Common.Infrastructure.Database;
 global using WristbandRadio.FileServer.Common.Infrastructure.Repositories;
