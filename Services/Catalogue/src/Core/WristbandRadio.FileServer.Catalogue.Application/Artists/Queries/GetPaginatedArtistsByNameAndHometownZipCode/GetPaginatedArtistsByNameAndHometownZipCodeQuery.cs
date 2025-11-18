@@ -1,0 +1,3 @@
+﻿namespace WristbandRadio.FileServer.Catalogue.Application.Artists.Queries.GetPaginatedArtistsByNameAndHometownZipCode;
+
+public sealed record GetPaginatedArtistsByNameAndHometownZipCodeQuery(ArtistQueryParameters QueryParameters, string ArtistName, string HometownZipCode) : IRequest<PageList<ArtistResponseDto>>;

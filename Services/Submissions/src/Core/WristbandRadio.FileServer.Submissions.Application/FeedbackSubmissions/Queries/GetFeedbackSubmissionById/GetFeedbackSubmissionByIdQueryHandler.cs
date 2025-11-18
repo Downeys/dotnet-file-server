@@ -1,6 +1,6 @@
 ﻿namespace WristbandRadio.FileServer.Submissions.Application.FeedbackSubmissions.Queries.GetFeedbackSubmissionById;
 
-public class GetFeedbackSubmissionByIdQueryHandler : IRequestHandler<GetFeedbackSubmissionByIdQuery, FeedbackSubmission>
+public class GetFeedbackSubmissionByIdQueryHandler : IRequestHandler<GetFeedbackSubmissionByIdQuery, FeedbackSubmission?>
 {
     private readonly ILogger<GetFeedbackSubmissionByIdQueryHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;

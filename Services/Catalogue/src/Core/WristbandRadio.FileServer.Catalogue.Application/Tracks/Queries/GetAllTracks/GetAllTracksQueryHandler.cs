@@ -12,7 +12,7 @@ public class GetAllTracksQueryHandler : IRequestHandler<GetAllTracksQuery, IEnum
     public async Task<IEnumerable<TrackResponseDto>> Handle(GetAllTracksQuery request, CancellationToken cancellationToken)
     {
         var queryParameters = new QueryParameters();
-        var tracks = await _unitOfWork.TrackRepository.GetAsync(queryParameters, nameof(TrackDto.Id), nameof(TrackDto.SongName), nameof(TrackDto.ArtistName), nameof(TrackDto.AlbumName), nameof(TrackDto.Genre1), nameof(TrackDto.Genre2), nameof(TrackDto.Genre3), nameof(TrackDto.Genre4), nameof(TrackDto.Genre5), nameof(TrackDto.AudioUrl), nameof(TrackDto.AlbumArtUrl), nameof(TrackDto.TrackPurchaseUrl), nameof(TrackDto.IsExplicit));
+        var tracks = await _unitOfWork.Tracks.GetAsync(queryParameters, nameof(TrackDto.Id), nameof(TrackDto.SongName), nameof(TrackDto.ArtistName), nameof(TrackDto.AlbumName), nameof(TrackDto.Genre1), nameof(TrackDto.Genre2), nameof(TrackDto.Genre3), nameof(TrackDto.Genre4), nameof(TrackDto.Genre5), nameof(TrackDto.AudioUrl), nameof(TrackDto.AlbumArtUrl), nameof(TrackDto.TrackPurchaseUrl), nameof(TrackDto.IsExplicit));
         return tracks.Select(t => {
             var genreList = new List<string>();
             genreList.Add(((Genre)t.Genre1).ToString());

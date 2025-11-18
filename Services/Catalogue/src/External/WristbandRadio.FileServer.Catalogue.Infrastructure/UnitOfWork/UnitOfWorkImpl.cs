@@ -4,7 +4,10 @@ public class UnitOfWorkImpl : IUnitOfWork
 {
     private bool _disposed;
     private readonly DapperDataContext _dapperDataContext;
-    public ITrackRepository TrackRepository { get; private set; }
+    public ITrackRepository Tracks { get; private set; }
+    public IArtistRepository Artists { get; private set; }
+    public IAlbumRepository Albums { get; private set; }
+    public ISongRepository Songs { get; private set; }
     public UnitOfWorkImpl(DapperDataContext dapperDataContext)
     {
         _dapperDataContext = dapperDataContext;
@@ -13,7 +16,10 @@ public class UnitOfWorkImpl : IUnitOfWork
 
     private void Init()
     {
-        TrackRepository = new TrackRepository(_dapperDataContext);
+        Tracks = new TrackRepository(_dapperDataContext);
+        Artists = new ArtistRepository(_dapperDataContext);
+        Albums = new AlbumRepository(_dapperDataContext);
+        Songs = new SongRepository(_dapperDataContext);
     }
     public async Task BeginTransaction()
     {

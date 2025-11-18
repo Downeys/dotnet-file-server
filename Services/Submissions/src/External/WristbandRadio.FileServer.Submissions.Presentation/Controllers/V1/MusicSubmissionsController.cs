@@ -35,7 +35,7 @@ public sealed class MusicSubmissionsController : ControllerBase
     {
         _logger.LogInformation("Get MusicSubmission by Id method called");
         var musicSubmission = await _sender.Send(new GetMusicSubmissionByIdQuery(id));
-        if (musicSubmission == null)
+        if (musicSubmission is null)
         {
             return NotFound();
         }
