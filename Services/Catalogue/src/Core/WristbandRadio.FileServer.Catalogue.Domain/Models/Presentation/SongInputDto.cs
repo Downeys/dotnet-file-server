@@ -1,7 +1,6 @@
 ﻿namespace WristbandRadio.FileServer.Catalogue.Domain.Models.Presentation;
 
-public sealed record SongResponseDto(
-    Guid Id,
+public sealed record SongInputDto(
     string SongName,
     string AudioUrl,
     string? PurchaseUrl,
@@ -15,5 +14,6 @@ public sealed record SongResponseDto(
     int? Genre3,
     int? Genre4,
     int? Genre5,
-    string Status
+    string Status,
+    Guid CreatedBy
     );

@@ -12,10 +12,12 @@ public class SongDto : IDbEntity
     public Guid AlbumId { get; set; }
     [ColumnName("song_name")]
     public string SongName { get; set; }
-    [ColumnName("duration_seconds")]
-    public int DurationSeconds { get; set; }
+    [ColumnName("duration_in_seconds")]
+    public int DurationInSeconds { get; set; }
     [ColumnName("audio_url")]
     public string AudioUrl { get; set; }
+    [ColumnName("track_purchase_url")]
+    public string? TrackPurchaseUrl { get; set; }
     [ColumnName("is_explicit")]
     public bool IsExplicit { get; set; }
     [ColumnName("genre_1")]
@@ -34,5 +36,7 @@ public class SongDto : IDbEntity
     public Guid CreatedBy { get; set; }
     [ColumnName("created_datetime")]
     public DateTime? CreatedDatetime { get; set; }
+    [ColumnName("album_order")]
+    public int AlbumOrder { get; set; }
     public SongDto() { }
 }
