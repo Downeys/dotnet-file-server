@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS music.songs (
 	genre_4 INT,
 	genre_5 INT,
 	is_explicit BOOLEAN,
+	duration_in_seconds INT,
 	status VARCHAR(24),
 	created_datetime TIMESTAMP WITH TIME ZONE NOT NULL,
 	updated_datetime TIMESTAMP WITH TIME ZONE,
@@ -186,6 +187,7 @@ SELECT
     s.song_name,
     s.audio_url,
     s.track_purchase_url,
+	s.duration_in_seconds,
     art.artist_name,
     ab.album_name,
     ab.album_art_url,
@@ -209,6 +211,7 @@ SELECT
     s.song_name,
     s.audio_url,
     s.track_purchase_url,
+	s.duration_in_seconds,
     art.artist_name,
     ab.album_name,
     ab.album_art_url,
@@ -239,7 +242,6 @@ SELECT
 	al.album_purchase_url
 FROM music.artists ar
 LEFT JOIN music.albums al ON ar.id = al.artist_id;
-
 
 -- Create submissions schema for data submitted by users
 CREATE SCHEMA IF NOT EXISTS submissions;

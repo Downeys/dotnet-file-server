@@ -21,6 +21,12 @@ global using WristbandRadio.FileServer.Catalogue.Application.Artists.Commands.Up
 global using WristbandRadio.FileServer.Catalogue.Application.Artists.Queries.GetArtistById;
 global using WristbandRadio.FileServer.Catalogue.Application.Artists.Queries.GetPaginatedArtists;
 global using WristbandRadio.FileServer.Catalogue.Application.Artists.Queries.GetPaginatedArtistsByNameAndHometownZipCode;
+global using WristbandRadio.FileServer.Catalogue.Application.Songs.Commands.AddSong;
+global using WristbandRadio.FileServer.Catalogue.Application.Songs.Commands.RemoveSong;
+global using WristbandRadio.FileServer.Catalogue.Application.Songs.Commands.UpdateSong;
+global using WristbandRadio.FileServer.Catalogue.Application.Songs.Queries.GetPaginatedSongs;
+global using WristbandRadio.FileServer.Catalogue.Application.Songs.Queries.GetPaginatedSongsByArtistAlbumAndSongNames;  
+global using WristbandRadio.FileServer.Catalogue.Application.Songs.Queries.GetSongById;
 global using WristbandRadio.FileServer.Catalogue.Application.Tracks.Queries.GetAllTracks;
 global using WristbandRadio.FileServer.Catalogue.Domain.Models.Presentation;
 global using WristbandRadio.FileServer.Catalogue.Domain.Utilities;

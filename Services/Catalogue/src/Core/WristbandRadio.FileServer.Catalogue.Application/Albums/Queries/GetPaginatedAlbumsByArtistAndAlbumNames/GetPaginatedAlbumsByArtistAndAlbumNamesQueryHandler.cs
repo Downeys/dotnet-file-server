@@ -13,11 +13,11 @@ public class GetPaginatedAlbumsByArtistAndAlbumNamesQueryHandler : IRequestHandl
     public async Task<PageList<AlbumResponseDto>> Handle(GetPaginatedAlbumsByArtistAndAlbumNamesQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Fetching paginated albums");
-        var abums = await _unitOfWork.Albums.GetAlbumBuArtistNameAndAlbumName(request.QueryParameters, request.ArtistName, request.AlbumName, cancellationToken);
-        if (abums is not null && abums.Items.Any())
+        var albums = await _unitOfWork.Albums.GetAlbumByArtistNameAndAlbumName(request.QueryParameters, request.ArtistName, request.AlbumName, cancellationToken);
+        if (albums is not null && albums.Items.Any())
         {
-            var albumsResponse = abums.Items.Select((album) => Album.Create(album.ArtistId, album.AlbumName, album.AlbumArtUrl, album.AlbumPurchaseUrl, album.CreatedBy).ToResponseDto()).ToList();
-            return PageList<AlbumResponseDto>.Create(albumsResponse, abums.PageNumber, abums.PageSize, abums.TotalCount);
+            var albumsResponse = albums.Items.Select((album) => Album.Create(album.ArtistId, album.AlbumName, album.AlbumArtUrl, album.AlbumPurchaseUrl, album.CreatedBy).ToResponseDto()).ToList();
+            return PageList<AlbumResponseDto>.Create(albumsResponse, albums.PageNumber, albums.PageSize, albums.TotalCount);
         }
         return PageList<AlbumResponseDto>.Create(new List<AlbumResponseDto>(), 1, 0, 0);
     }

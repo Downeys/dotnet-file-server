@@ -7,6 +7,7 @@ global using WristbandRadio.FileServer.Catalogue.Domain.Entities.Albums;
 global using WristbandRadio.FileServer.Catalogue.Domain.Entities.Albums.Validators;
 global using WristbandRadio.FileServer.Catalogue.Domain.Entities.Artists.Specifications;
 global using WristbandRadio.FileServer.Catalogue.Domain.Entities.Artists.Validators;
+global using WristbandRadio.FileServer.Catalogue.Domain.Entities.Songs.Validators;
 global using WristbandRadio.FileServer.Catalogue.Domain.Exceptions;
 global using WristbandRadio.FileServer.Catalogue.Domain.Models.Persistence;
 global using WristbandRadio.FileServer.Catalogue.Domain.Models.Presentation;
@@ -17,3 +18,4 @@ global using WristbandRadio.FileServer.Common.Domain.Contracts.Specification;
 global using WristbandRadio.FileServer.Common.Domain.Exceptions;
 global using WristbandRadio.FileServer.Common.Domain.Utilities;
 global using WristbandRadio.FileServer.Common.Domain.Utilities.Custom_Attributes;
+

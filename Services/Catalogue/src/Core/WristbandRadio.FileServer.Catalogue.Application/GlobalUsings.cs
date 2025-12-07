@@ -6,6 +6,7 @@ global using Microsoft.Extensions.Logging;
 global using WristbandRadio.FileServer.Catalogue.Domain.Contracts;
 global using WristbandRadio.FileServer.Catalogue.Domain.Entities.Albums;
 global using WristbandRadio.FileServer.Catalogue.Domain.Entities.Artists;
+global using WristbandRadio.FileServer.Catalogue.Domain.Entities.Songs;
 global using WristbandRadio.FileServer.Catalogue.Domain.Exceptions;
 global using WristbandRadio.FileServer.Catalogue.Domain.Models;
 global using WristbandRadio.FileServer.Catalogue.Domain.Models.Persistence;

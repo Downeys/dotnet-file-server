@@ -13,7 +13,7 @@ public class AlbumRepository : GenericRepository<AlbumDto>, IAlbumRepository
         return pagedAlbums;
     }
 
-    public async Task<PageList<AlbumDto>> GetAlbumBuArtistNameAndAlbumName(AlbumQueryParameters queryParameters, string artistName, string albumName, CancellationToken cancellationToken)
+    public async Task<PageList<AlbumDto>> GetAlbumByArtistNameAndAlbumName(AlbumQueryParameters queryParameters, string artistName, string albumName, CancellationToken cancellationToken)
     {
         var pageNumber = queryParameters.PageNo;
         var pageSize = queryParameters.PageSize;
